@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "sportinj"
+version = "0.1.0"
+description = ""
+authors = ["alekseybeloded <belod-aleksej@yandex.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "4.2.11"
+mypy = "^1.10.0"
+flake8 = "^7.0.0"
+ipython = "^8.24.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

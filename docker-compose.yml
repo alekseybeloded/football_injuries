@@ -1,0 +1,12 @@
+services:
+  app-postgres:
+      image: postgres:15-alpine
+      container_name: sportinj_db
+      ports:
+        - "5432:5432"
+      environment:
+        POSTGRES_DB: sportinj
+        POSTGRES_USER: sportinj
+        POSTGRES_PASSWORD: sportinj
+      volumes:
+        - ${APP_DATA:-./app_data}/data:/var/lib/postgresql/data

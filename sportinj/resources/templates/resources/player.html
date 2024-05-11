@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <title>Страница с игроками</title>
+</head>
+<body>
+<h1>Страница с игроками</h1>
+{% for player in players %}
+<p><a href="{% url 'injuries' player.team_id player.id %}">{{ player.name }}</a></p>
+{% endfor %}
+</body>
+</html>

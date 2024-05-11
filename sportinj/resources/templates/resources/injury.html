@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  <title>Страница с травмами</title>
+</head>
+<body>
+<h1>Страница с травмами</h1>
+{% for injury in injuries %}
+<p>{{ injury.name }}</p>
+{% endfor %}
+</body>
+</html>

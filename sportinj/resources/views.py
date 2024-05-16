@@ -1,26 +1,52 @@
 from django.shortcuts import render
 
 from django.shortcuts import render
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse
 from resources.models import Team, Player, Injury
 
 
-menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+menu = [ 
+    {'title': 'Добавить травму', 'url_name': 'add_injury'},
+    {'title': 'Контакты', 'url_name': 'contacts'},
+    {'title': 'Что-нибудь еще', 'url_name': 'login'},
+]
 
 def index(request):
     teams = Team.objects.all()
-    return render(request, 'resources/index.html', {'teams': teams})
-
-def get_all_teams(request):
-    return render(request, 'resources/team.html', {'title': 'teams'})
+    data_of_teams = {
+        'teams': teams,
+        'menu': menu,
+        'title': 'Главная страница'
+    }
+    return render(request, 'resources/index.html', context=data_of_teams)
 
 def get_all_players_for_team(request, team_id):
     players = Player.objects.filter(team_id=team_id)
-    return render(request, 'resources/player.html', {'players': players})
+    data_of_players = {
+        'players': players,
+        'menu': menu,
+        'title': 'Страница с игроками'
+    }
+    return render(request, 'resources/player.html', context=data_of_players)
 
 def injuries(request, team_id, player_id):
     injuries = Injury.objects.filter(player_id=player_id)
-    return render(request, 'resources/injury.html', {'injuries': injuries})
+    data_of_injuries = {
+        'injuries': injuries,
+        'menu': menu,
+        'title': 'Страница с травмами'
+    }
+    return render(request, 'resources/injury.html', context=data_of_injuries)
+
+def add_injury(request):
+    return HttpResponse('Добавление травмы')
+
+def contacts(request):
+    return HttpResponse('Контакты')
+
+def login(request):
+    return HttpResponse('Авторизация')
+
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')

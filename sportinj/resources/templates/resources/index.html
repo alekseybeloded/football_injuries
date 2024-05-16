@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-  <title>Главная страница</title>
-</head>
-<body>
-<p>{{ menu|join:' | ' }}</p>
-<h1>Главная страница</h1>
+{% extends  'base.html' %}
+
+{% block content %}
 {% for team in teams %}
 <p><a href="{% url 'players' team.id %}">{{ team.name }}</a></p>
 {% endfor %}
-</body>
-</html>
+{% endblock %}

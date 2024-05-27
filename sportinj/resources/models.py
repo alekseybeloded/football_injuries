@@ -1,8 +1,10 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Team(models.Model):
     name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=100, unique=True)
     description = models.CharField(max_length=1000, null=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
@@ -16,6 +18,7 @@ class Team(models.Model):
 
 class Player(models.Model):
     name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=100, unique=True)
     description = models.CharField(max_length=1000, null=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_uodate = models.DateTimeField(auto_now=True)

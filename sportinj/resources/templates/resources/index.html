@@ -2,6 +2,6 @@
 
 {% block content %}
 {% for team in teams %}
-<p><a href="{% url 'players' team.id %}">{{ team.name }}</a></p>
+<p><a href="{% url 'players' team.slug %}">{{ team.name }}</a></p>
 {% endfor %}
 {% endblock %}

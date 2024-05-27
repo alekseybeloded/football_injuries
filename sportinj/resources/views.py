@@ -1,6 +1,4 @@
 from django.shortcuts import render
-
-from django.shortcuts import render
 from django.http import HttpResponseNotFound, HttpResponse
 from resources.models import Team, Player, Injury
 
@@ -20,19 +18,22 @@ def index(request):
     }
     return render(request, 'resources/index.html', context=data_of_teams)
 
-def get_all_players_for_team(request, team_id):
-    players = Player.objects.filter(team_id=team_id)
+def get_all_players_for_team(request, team_slug):
+    team = Team.objects.get(slug=team_slug)
+    players = Player.objects.filter(team_id=team.id)
     data_of_players = {
         'players': players,
+        'team': team,
         'menu': menu,
         'title': 'Страница с игроками'
     }
     return render(request, 'resources/player.html', context=data_of_players)
 
-def injuries(request, team_id, player_id):
-    injuries = Injury.objects.filter(player_id=player_id)
+def injury(request, team_slug, player_slug):
+    player = Player.objects.get(slug=player_slug)
+    injury = Injury.objects.get(player_id=player.id)
     data_of_injuries = {
-        'injuries': injuries,
+        'injury': injury,
         'menu': menu,
         'title': 'Страница с травмами'
     }

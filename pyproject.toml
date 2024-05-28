@@ -12,6 +12,7 @@ mypy = "^1.10.0"
 flake8 = "^7.0.0"
 ipython = "^8.24.0"
 django-extensions = "^3.2.3"
+django-debug-toolbar = "^4.4.2"
 
 
 [build-system]

@@ -1,5 +1,4 @@
 from django.db import models
-from django.urls import reverse
 
 
 class Team(models.Model):
@@ -22,7 +21,8 @@ class Player(models.Model):
     description = models.CharField(max_length=1000, null=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_uodate = models.DateTimeField(auto_now=True)
-    team = models.ForeignKey('Team', on_delete=models.PROTECT, related_name='teams')
+    team = models.ForeignKey('Team', on_delete=models.PROTECT, related_name='players')
+    injuries = models.ManyToManyField('Injury', blank=True, related_name='injuries')
 
     class Meta:
         ordering = ['time_create']
@@ -36,7 +36,6 @@ class Injury(models.Model):
     description = models.CharField(max_length=1000, null=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    player = models.ForeignKey('Player', on_delete=models.PROTECT, related_name='players')
 
     class Meta:
         ordering = ['time_create']

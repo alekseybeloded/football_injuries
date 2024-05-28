@@ -22,6 +22,7 @@ from resources import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('resources.urls')),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 handler404 = views.page_not_found

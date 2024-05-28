@@ -31,9 +31,9 @@ def get_all_players_for_team(request, team_slug):
 
 def injury(request, team_slug, player_slug):
     player = Player.objects.get(slug=player_slug)
-    injury = Injury.objects.get(player_id=player.id)
+    injuries = player.injuries.all()
     data_of_injuries = {
-        'injury': injury,
+        'injuries': injuries,
         'menu': menu,
         'title': 'Страница с травмами'
     }

@@ -26,3 +26,5 @@ urlpatterns = [
 ]
 
 handler404 = views.page_not_found
+admin.site.site_header='Administration Football injuries'
+admin.site.index_title='Football injuries'

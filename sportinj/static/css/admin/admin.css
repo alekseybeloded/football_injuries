@@ -1,0 +1,23 @@
+#header {
+    background: #0d6efd;
+}
+
+#header #site-name a {
+    color: #f8f9fa;
+}
+
+.app-auth table caption {
+    background-color: #0d6efd;
+}
+
+.app-resources table caption {
+    background-color: #0d6efd;
+}
+
+div.breadcrumbs {
+    background-color: #6ea8fe;
+}
+
+#changelist-filter h2 {
+    background-color: #0d6efd;
+}

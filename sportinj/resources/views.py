@@ -1,46 +1,59 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound, HttpResponse
-from resources.models import Team, Player, Injury
+from resources.models import Team, Player
+from resources.forms import AddPlayerForm
 
 
 menu = [ 
-    {'title': 'Добавить травму', 'url_name': 'add_injury'},
+    {'title': 'Добавить игрока', 'url_name': 'add_player'},
     {'title': 'Контакты', 'url_name': 'contacts'},
     {'title': 'Что-нибудь еще', 'url_name': 'login'},
 ]
 
 def index(request):
     teams = Team.objects.all()
-    data_of_teams = {
+    teams_context_data = {
         'teams': teams,
         'menu': menu,
         'title': 'Главная страница'
     }
-    return render(request, 'resources/index.html', context=data_of_teams)
+    return render(request, 'resources/index.html', context=teams_context_data)
 
 def get_all_players_for_team(request, team_slug):
     team = Team.objects.get(slug=team_slug)
     players = Player.objects.filter(team_id=team.id)
-    data_of_players = {
+    players_context_data = {
         'players': players,
         'team': team,
         'menu': menu,
         'title': 'Страница с игроками'
     }
-    return render(request, 'resources/player.html', context=data_of_players)
+    return render(request, 'resources/player.html', context=players_context_data)
 
 def injury(request, team_slug, player_slug):
     player = Player.objects.get(slug=player_slug)
     injuries = player.injuries.all()
-    data_of_injuries = {
+    injuries_context_data = {
         'injuries': injuries,
         'menu': menu,
         'title': 'Страница с травмами'
     }
-    return render(request, 'resources/injury.html', context=data_of_injuries)
+    return render(request, 'resources/injury.html', context=injuries_context_data)
 
-def add_injury(request):
-    return HttpResponse('Добавление травмы')
+def add_player(request):
+    if request.method == 'POST':
+        form = AddPlayerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form =AddPlayerForm()
+
+    add_player_context_data = {
+        'menu': menu,
+        'form': form
+    }
+    return render(request, 'resources/add_player.html', context=add_player_context_data)
 
 def contacts(request):
     return HttpResponse('Контакты')

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  {% for field in form %}
+  <div class="form-group row align-items-center mb-3">
+    <label for="{{ field.id_for_label }}" class="col-sm-1 col-form-label">{{ field.label }}</label>
+    <div class="col-sm-6">
+      {{ field }}
+      {% if field.errors %}
+        <div class="invalid-feedback d-block">
+          {% for error in field.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+<button type="submit" class="btn btn-primary mt-2">Submit</button>
+</form>
+{% endblock %}

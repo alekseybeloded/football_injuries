@@ -30,3 +30,4 @@ class AddPlayerForm(forms.ModelForm):
         name = self.cleaned_data['name']
         if Player.objects.filter(name=name).exists():
             raise forms.ValidationError("User with that name already exists")
+        return name

@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponseNotFound, HttpResponse
 from resources.models import Team, Player
 from resources.forms import AddPlayerForm
+from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic.edit import FormView
 
 
 menu = [ 
@@ -10,50 +13,61 @@ menu = [
     {'title': 'Что-нибудь еще', 'url_name': 'login'},
 ]
 
-def index(request):
-    teams = Team.objects.all()
-    teams_context_data = {
-        'teams': teams,
+
+class HomePage(ListView):
+    model = Team
+    template_name = 'resources/index.html'
+    context_object_name = 'teams'
+    extra_context = {
         'menu': menu,
         'title': 'Главная страница'
     }
-    return render(request, 'resources/index.html', context=teams_context_data)
 
-def get_all_players_for_team(request, team_slug):
-    team = Team.objects.get(slug=team_slug)
-    players = Player.objects.filter(team_id=team.id)
-    players_context_data = {
-        'players': players,
-        'team': team,
+
+class GetPlayersForTeam(ListView):
+    template_name = 'resources/player.html'
+    context_object_name = 'players'
+
+    def get_queryset(self):
+        self.team = get_object_or_404(Team, slug=self.kwargs['team_slug'])
+        return Player.objects.filter(team__slug=self.kwargs['team_slug'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['team'] = self.team
+        context['title'] = 'Страница с игроками'
+        return context
+
+
+class GetInjuriesForPlayer(ListView):
+    template_name = 'resources/injury.html'
+    context_object_name = 'injuries'
+
+    def get_queryset(self):
+        player = get_object_or_404(Player, slug=self.kwargs['player_slug'])
+        return player.injuries.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Страница с травмами'
+        return context
+
+
+class AddPlayer(FormView):
+    form_class = AddPlayerForm
+    template_name = 'resources/add_player.html'
+    success_url = reverse_lazy('home')
+    extra_context = {
         'menu': menu,
-        'title': 'Страница с игроками'
+        'title': 'Добавление игрока',
     }
-    return render(request, 'resources/player.html', context=players_context_data)
 
-def injury(request, team_slug, player_slug):
-    player = Player.objects.get(slug=player_slug)
-    injuries = player.injuries.all()
-    injuries_context_data = {
-        'injuries': injuries,
-        'menu': menu,
-        'title': 'Страница с травмами'
-    }
-    return render(request, 'resources/injury.html', context=injuries_context_data)
-
-def add_player(request):
-    if request.method == 'POST':
-        form = AddPlayerForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form =AddPlayerForm()
-
-    add_player_context_data = {
-        'menu': menu,
-        'form': form
-    }
-    return render(request, 'resources/add_player.html', context=add_player_context_data)
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+    
 
 def contacts(request):
     return HttpResponse('Контакты')

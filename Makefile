@@ -1,0 +1,2 @@
+style:
+	ruff check sportinj

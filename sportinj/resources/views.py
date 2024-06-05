@@ -1,13 +1,13 @@
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseNotFound, HttpResponse
-from resources.models import Team, Player
-from resources.forms import AddPlayerForm
-from django.views.generic import ListView
 from django.urls import reverse_lazy
+from django.views.generic import ListView
 from django.views.generic.edit import FormView
 
+from resources.forms import AddPlayerForm
+from resources.models import Player, Team
 
-menu = [ 
+menu = [
     {'title': 'Добавить игрока', 'url_name': 'add_player'},
     {'title': 'Контакты', 'url_name': 'contacts'},
     {'title': 'Что-нибудь еще', 'url_name': 'login'},
@@ -18,10 +18,7 @@ class HomePage(ListView):
     model = Team
     template_name = 'resources/index.html'
     context_object_name = 'teams'
-    extra_context = {
-        'menu': menu,
-        'title': 'Главная страница'
-    }
+    extra_context = {'menu': menu, 'title': 'Главная страница'}
 
 
 class GetPlayersForTeam(ListView):
@@ -67,10 +64,11 @@ class AddPlayer(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
-    
+
 
 def contacts(request):
     return HttpResponse('Контакты')
+
 
 def login(request):
     return HttpResponse('Авторизация')
@@ -78,4 +76,3 @@ def login(request):
 
 def page_not_found(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
-

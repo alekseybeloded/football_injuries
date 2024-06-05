@@ -1,6 +1,6 @@
 from django import forms
-from resources.models import Team, Player
 
+from resources.models import Player, Team
 
 
 class AddPlayerForm(forms.ModelForm):
@@ -29,5 +29,5 @@ class AddPlayerForm(forms.ModelForm):
     def clean_name(self):
         name = self.cleaned_data['name']
         if Player.objects.filter(name=name).exists():
-            raise forms.ValidationError("User with that name already exists")
+            raise forms.ValidationError('User with that name already exists')
         return name

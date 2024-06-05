@@ -12,13 +12,13 @@ class Team(models.Model):
     class Meta:
         ordering = ['time_create']
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-    
+
 
 class Player(models.Model):
     name = models.CharField(max_length=200)
@@ -34,21 +34,21 @@ class Player(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-    
+
 
 class Injury(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=1000, null=True, blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    
+
     class Meta:
-        verbose_name_plural='Injuries   '
+        verbose_name_plural = 'Injuries'
         ordering = ['time_create']
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name

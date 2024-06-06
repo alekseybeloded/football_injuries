@@ -1,0 +1,21 @@
+name: Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: install dependencies
+        run: pip install --upgrade pip && pip install poetry && poetry install
+      - name: run ruff
+        uses: chartboost/ruff-action@v1

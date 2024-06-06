@@ -18,4 +18,4 @@ jobs:
       - name: install dependencies
         run: pip install --upgrade pip && pip install poetry && poetry install
       - name: run ruff
-        run: ruff check sportinj
+        uses: chartboost/ruff-action@v1

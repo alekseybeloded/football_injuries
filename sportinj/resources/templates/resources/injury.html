@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for injury in injuries %}
-<p>{{ injury.name }}</p>
-{% endfor %}
+<div class="items-list">
+  {% for injury in injuries %}
+  <p>{{ injury.name }}</p>
+  {% endfor %}
+</div>
 {% endblock %}

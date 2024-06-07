@@ -6,6 +6,7 @@
   <title>{{ title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="{% static 'resources/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'resources/css/styles.css' %}" rel="stylesheet">
   <script src="https://kit.fontawesome.com/45589c5eae.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -38,6 +39,7 @@
       <div class="row">
         <div class="col">
           {% block content %} {% endblock %}
+          {% include 'includes/pagination.html' %}
         </div>
       </div>
   </div>

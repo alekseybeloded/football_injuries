@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for player in players %}
-<p><a href="{% url 'injuries' team.slug player.slug %}">{{ player.name }}</a></p>
-{% endfor %}
+<div class="items-list">
+  {% for player in players %}
+  <p><a href="{% url 'injuries' team.slug player.slug %}">{{ player.name }}</a></p>
+  {% endfor %}
+</div>
 {% endblock %}

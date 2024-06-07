@@ -14,6 +14,7 @@ class HomePage(MenuMixin, ListView):
     template_name = 'resources/index.html'
     context_object_name = 'teams'
     title_page = 'Главная страница'
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -23,6 +24,7 @@ class HomePage(MenuMixin, ListView):
 class GetPlayersForTeam(MenuMixin, ListView):
     template_name = 'resources/player.html'
     context_object_name = 'players'
+    paginate_by = 10
 
     def get_queryset(self):
         self.team = get_object_or_404(Team, slug=self.kwargs['team_slug'])
@@ -37,6 +39,7 @@ class GetInjuriesForPlayer(MenuMixin, ListView):
     template_name = 'resources/injury.html'
     context_object_name = 'injuries'
     title_page = 'Травмы'
+    paginate_by = 10
 
     def get_queryset(self):
         self.player = get_object_or_404(Player, slug=self.kwargs['player_slug'])

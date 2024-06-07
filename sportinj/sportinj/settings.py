@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'resources.apps.ResourcesConfig',
+    'account.apps.AccountConfig',
     'django_extensions',
     'debug_toolbar',
 ]

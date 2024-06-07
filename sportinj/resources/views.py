@@ -6,22 +6,21 @@ from django.views.generic.edit import FormView
 
 from resources.forms import AddPlayerForm
 from resources.models import Player, Team
-
-menu = [
-    {'title': 'Добавить игрока', 'url_name': 'add_player'},
-    {'title': 'Контакты', 'url_name': 'contacts'},
-    {'title': 'Что-нибудь еще', 'url_name': 'login'},
-]
+from resources.utils import MenuMixin
 
 
-class HomePage(ListView):
+class HomePage(MenuMixin, ListView):
     model = Team
     template_name = 'resources/index.html'
     context_object_name = 'teams'
-    extra_context = {'menu': menu, 'title': 'Главная страница'}
+    title_page = 'Главная страница'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return self.get_mixin_context(context)
 
 
-class GetPlayersForTeam(ListView):
+class GetPlayersForTeam(MenuMixin, ListView):
     template_name = 'resources/player.html'
     context_object_name = 'players'
 
@@ -31,35 +30,28 @@ class GetPlayersForTeam(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['team'] = self.team
-        context['title'] = 'Страница с игроками'
-        return context
+        return self.get_mixin_context(context, team=self.team, title=f'Игроки {self.team}')
 
 
-class GetInjuriesForPlayer(ListView):
+class GetInjuriesForPlayer(MenuMixin, ListView):
     template_name = 'resources/injury.html'
     context_object_name = 'injuries'
+    title_page = 'Травмы'
 
     def get_queryset(self):
-        player = get_object_or_404(Player, slug=self.kwargs['player_slug'])
-        return player.injuries.all()
+        self.player = get_object_or_404(Player, slug=self.kwargs['player_slug'])
+        return self.player.injuries.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Страница с травмами'
-        return context
+        return self.get_mixin_context(context, title=f'Травмы игрока {self.player}')
 
 
-class AddPlayer(FormView):
+class AddPlayer(MenuMixin, FormView):
     form_class = AddPlayerForm
     template_name = 'resources/add_player.html'
     success_url = reverse_lazy('home')
-    extra_context = {
-        'menu': menu,
-        'title': 'Добавление игрока',
-    }
+    title_page = 'Добавление игрока'
 
     def form_valid(self, form):
         form.save()

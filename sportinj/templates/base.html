@@ -20,17 +20,26 @@
           <h5>Football injuries</h>
         </a>
       </div>
-
+      {% block mainmenu %}
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary">Home</a></li>
-        {% for item in menu %}
+        {% for item in mainmenu %}
         <li><a href="{% url item.url_name %}" class="nav-link px-2">{{ item.title }}</a></li>
         {% endfor %}
       </ul>
-
+      {% endblock mainmenu %}
       <div class="col-md-3 text-end">
-        <button type="button" class="btn btn-outline-primary me-2">Войти</button>
-        <button type="button" class="btn btn-primary">Зарегистрироваться</button>
+        {% if user.is_authenticated %}
+        <ul class="nav justify-content-sm-end">
+          <li class="nav-item d-flex align-items-center">
+            <span class="me-2">{{ user.username }}</span>
+            <a href="{% url 'account:logout' %}" class="nav-link me-2">Выйти</a>
+          </li>
+        </ul>
+        {% else %}
+        <a class="btn btn-outline-primary me-2" href="{% url 'account:login' %}" role="button">Войти</a>
+        <a class="btn btn-primary" href="#" role="button">Зарегистрироваться</a>
+        {% endif %}
       </div>
     </header>
   </div>

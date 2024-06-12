@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -21,7 +22,7 @@ class HomePage(MenuMixin, ListView):
         return self.get_mixin_context(context)
 
 
-class GetPlayersForTeam(MenuMixin, ListView):
+class GetPlayersForTeam(LoginRequiredMixin, MenuMixin, ListView):
     template_name = 'resources/player.html'
     context_object_name = 'players'
     paginate_by = 10
@@ -50,7 +51,7 @@ class GetInjuriesForPlayer(MenuMixin, ListView):
         return self.get_mixin_context(context, title=f'Травмы игрока {self.player}')
 
 
-class AddPlayer(MenuMixin, FormView):
+class AddPlayer(LoginRequiredMixin, MenuMixin, FormView):
     form_class = AddPlayerForm
     template_name = 'resources/add_player.html'
     success_url = reverse_lazy('home')

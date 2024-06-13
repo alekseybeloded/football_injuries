@@ -38,7 +38,7 @@
         </ul>
         {% else %}
         <a class="btn btn-outline-primary me-2" href="{% url 'account:login' %}" role="button">Войти</a>
-        <a class="btn btn-primary" href="#" role="button">Зарегистрироваться</a>
+        <a class="btn btn-primary" href="{% url 'account:register' %}" role="button">Зарегистрироваться</a>
         {% endif %}
       </div>
     </header>

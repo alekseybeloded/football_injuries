@@ -8,6 +8,13 @@ class LoginUserForm(AuthenticationForm):
         model = get_user_model()
         fields = ['username', 'password']
 
+    error_messages = {
+        "invalid_login":
+            "Please enter a correct username/email and password. Note that both "
+            "fields may be case-sensitive.",
+        "inactive": "This account is inactive.",
+    }
+
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField()

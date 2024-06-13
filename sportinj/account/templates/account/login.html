@@ -6,8 +6,8 @@
   <form method="post">
     {% csrf_token %}
     <div class="form-floating mb-2">
-      <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}">
-      <label for="{{ form.username.id_for_label }}">Username</label>
+      <input type="text" class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" placeholder="Username or email  " value="{{ form.username.value|default_if_none:'' }}">
+      <label for="{{ form.username.id_for_label }}">Username or email</label>
     </div>
     {% if form.username.errors %}
     <div class="invalid-feedback d-block">

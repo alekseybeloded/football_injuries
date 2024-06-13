@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 
 class LoginUserForm(AuthenticationForm):
@@ -9,19 +9,14 @@ class LoginUserForm(AuthenticationForm):
         fields = ['username', 'password']
 
 
-class RegisterUserForm(forms.ModelForm):
+class RegisterUserForm(UserCreationForm):
     username = forms.CharField()
-    password = forms.CharField()
+    password1 = forms.CharField()
     password2 = forms.CharField()
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'email', 'first_name', 'last_name', 'password', 'password2']
-
-    def clean_password2(self):
-        if self.cleaned_data['password'] != self.cleaned_data['password2']:
-            raise forms.ValidationError("Passwords don't match")
-        return self.cleaned_data['password']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
 
     def clean_email(self):
         email = self.cleaned_data['email']

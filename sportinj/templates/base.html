@@ -32,7 +32,7 @@
         {% if user.is_authenticated %}
         <ul class="nav justify-content-sm-end">
           <li class="nav-item d-flex align-items-center">
-            <span class="me-2">{{ user.username }}</span>
+            <a href="{% url 'account:profile' %}" class="nav-link me-2">{{ user.username }}</a>
             <a href="{% url 'account:logout' %}" class="nav-link me-2">Выйти</a>
           </li>
         </ul>

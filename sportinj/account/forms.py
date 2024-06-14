@@ -30,3 +30,12 @@ class RegisterUserForm(UserCreationForm):
         if get_user_model().objects.filter(email=email).exists():
             raise forms.ValidationError('This email already exists')
         return email
+
+
+class ProfileUserForm(forms.ModelForm):
+    username = forms.CharField(disabled=True)
+    email = forms.CharField(disabled=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ['username', 'email', 'first_name', 'last_name']

@@ -34,9 +34,15 @@
         <p>{{ error }}</p>
       {% endfor %}
     </div>
+
     {% endif %}
     <div class="d-flex justify-content-center">
       <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+      <ul class="nav justify-content-sm-end">
+        <li class="nav-item d-flex align-items-center">
+          <a href="{% url 'account:password_reset' %}" class="nav-link me-2">Forgot password</a>
+        </li>
+      </ul>
     </div>
   </form>
 </div>

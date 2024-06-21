@@ -1,5 +1,7 @@
 services:
   web:
+    env_file:
+      - .env
     build: .
     command: sh -c 'python manage.py makemigrations &&
                 python manage.py migrate &&

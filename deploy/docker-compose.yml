@@ -1,12 +1,16 @@
 services:
   web:
-    image: ghcr.io/alekseybeloded/pet-project:${VERSION}
+    env_file:
+      - .env
+    restart: unless-stopped
+    image: ghcr.io/alekseybeloded/football_injuries:${VERSION}
     command: sh -c 'python manage.py makemigrations &&
                 python manage.py migrate &&
-                python manage.py collectstatic &&
-                gunicorn sportinj.wsgi:application --bind 0.0.0.0:8000'
-    ports:
-      - 8000:8000
+                python manage.py collectstatic --noinput &&
+                gunicorn sportinj.wsgi:application --bind 0.0.0.0'
+    volumes:
+      - static_volume:/app/sportinj/staticfiles
+      - media_volume:/app/sportinj/media
     depends_on:
       - db
 
@@ -21,3 +25,20 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
       - .data/postgres:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    volumes:
+      - static_volume:/app/sportinj/staticfiles
+      - media_volume:/app/sportinj/media
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+
+    ports:
+      - 8000:8000
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
+  media_volume:

@@ -14,7 +14,7 @@ class HomePage(MenuMixin, ListView):
     model = Team
     template_name = 'resources/index.html'
     context_object_name = 'teams'
-    title_page = 'Главная страница'
+    title_page = 'Homepage - Football injuries'
     paginate_by = 10
 
     def get_context_data(self, **kwargs):
@@ -24,7 +24,7 @@ class HomePage(MenuMixin, ListView):
 
 class GetPlayersForTeam(LoginRequiredMixin, MenuMixin, ListView):
     template_name = 'resources/player.html'
-    context_object_name = 'players'
+    context_object_name = 'Players'
     paginate_by = 10
 
     def get_queryset(self):
@@ -33,13 +33,13 @@ class GetPlayersForTeam(LoginRequiredMixin, MenuMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        return self.get_mixin_context(context, team=self.team, title=f'Игроки {self.team}')
+        return self.get_mixin_context(context, team=self.team, title=f'{self.team} players')
 
 
 class GetInjuriesForPlayer(MenuMixin, ListView):
     template_name = 'resources/injury.html'
     context_object_name = 'injuries'
-    title_page = 'Травмы'
+    title_page = 'Injuries'
     paginate_by = 10
 
     def get_queryset(self):
@@ -48,7 +48,7 @@ class GetInjuriesForPlayer(MenuMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        return self.get_mixin_context(context, title=f'Травмы игрока {self.player}')
+        return self.get_mixin_context(context, title=f"{self.player}'s injuries")
 
 
 class AddPlayer(LoginRequiredMixin, MenuMixin, FormView):
@@ -71,4 +71,4 @@ def login(request):
 
 
 def page_not_found(request, exception):
-    return HttpResponseNotFound('<h1>Страница не найдена</h1>')
+    return HttpResponseNotFound('<h1>Page not found</h1>')

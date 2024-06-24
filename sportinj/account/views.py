@@ -11,13 +11,13 @@ from account import forms
 class LoginUser(LoginView):
     form_class = forms.LoginUserForm
     template_name = 'account/login.html'
-    extra_context = {'title': 'Авторизация'}
+    extra_context = {'title': 'Authorization'}
 
 
 class RegisterUser(CreateView):
     form_class = forms.RegisterUserForm
     template_name = 'account/register.html'
-    extra_context = {'title': 'Регистрация'}
+    extra_context = {'title': 'Registration'}
     success_url = reverse_lazy('account:login')
 
 
@@ -25,7 +25,7 @@ class ProfileUser(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = forms.ProfileUserForm
     template_name = 'account/profile.html'
-    extra_context = {'title': "User's profile"}
+    extra_context = {'title': "Profile"}
     success_message = 'Profile was changed successfully'
 
     def get_success_url(self):

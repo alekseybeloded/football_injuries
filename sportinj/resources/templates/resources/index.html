@@ -1,13 +1,11 @@
 {% extends  'base.html' %}
 
 {% block content %}
+
 <div class="items-list">
-  <ul class="nav flex-column">
-    {% for team in teams %}
-    <li class="nav-item">
-      <a href="{% url 'players' team.slug %}" class="nav-link px-2">{{ team.name }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+  {% for team in teams %}
+    <p><a href="{% url 'players' team.slug %}" class="text-decoration-none">{{ team.name }}</a></p>
+  {% endfor %}
 </div>
+
 {% endblock %}

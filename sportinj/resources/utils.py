@@ -1,5 +1,4 @@
 menu = [
-    {'title': 'Добавить игрока', 'url_name': 'add_player'},
     {'title': 'Контакты', 'url_name': 'contacts'},
 ]
 

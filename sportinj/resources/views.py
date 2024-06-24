@@ -1,11 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.views.generic.edit import FormView
 
-from resources.forms import AddPlayerForm
 from resources.models import Player, Team
 from resources.utils import MenuMixin
 
@@ -49,17 +46,6 @@ class GetInjuriesForPlayer(MenuMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return self.get_mixin_context(context, title=f"{self.player}'s injuries")
-
-
-class AddPlayer(LoginRequiredMixin, MenuMixin, FormView):
-    form_class = AddPlayerForm
-    template_name = 'resources/add_player.html'
-    success_url = reverse_lazy('home')
-    title_page = 'Добавление игрока'
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
 
 
 def contacts(request):

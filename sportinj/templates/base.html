@@ -14,10 +14,10 @@
   <div class="container">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start py-3 mb-4 border-bottom">
       <div class="col-md-3 mb-2 mb-md-0">
-        <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <a class="d-inline-flex link-body-emphasis text-decoration-none">
           <i class="fa-solid fa-futbol fa-3x"></i>
           <i class="fa-solid fa-crutch fa-3x"></i>
-          <h5>Football injuries</h>
+          <i><h5>Football injuries</h></i>
         </a>
       </div>
       {% block mainmenu %}
@@ -33,12 +33,12 @@
         <ul class="nav justify-content-sm-end">
           <li class="nav-item d-flex align-items-center">
             <a href="{% url 'account:profile' %}" class="nav-link me-2">{{ user.username }}</a>
-            <a href="{% url 'account:logout' %}" class="nav-link me-2">Выйти</a>
+            <a href="{% url 'account:logout' %}" class="nav-link me-2">Exit</a>
           </li>
         </ul>
         {% else %}
-        <a class="btn btn-outline-primary me-2" href="{% url 'account:login' %}" role="button">Войти</a>
-        <a class="btn btn-primary" href="{% url 'account:register' %}" role="button">Зарегистрироваться</a>
+        <a class="btn btn-outline-primary me-2" href="{% url 'account:login' %}" role="button">Sign in</a>
+        <a class="btn btn-primary" href="{% url 'account:register' %}" role="button">Sign up</a>
         {% endif %}
       </div>
     </header>

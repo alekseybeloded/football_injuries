@@ -1,5 +1,5 @@
 menu = [
-    {'title': 'Контакты', 'url_name': 'contacts'},
+    {'title': 'Contacts', 'url_name': 'contacts'},
 ]
 
 

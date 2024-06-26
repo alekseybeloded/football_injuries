@@ -10,6 +10,6 @@ urlpatterns = [
         views.GetInjuriesForPlayer.as_view(),
         name='injuries',
     ),
-    path('contacts/', views.contacts, name='contacts'),
+    path('contacts/', views.Contacts.as_view(), name='contacts'),
     path('login/', views.login, name='login'),
 ]

@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 
 from resources.models import Player, Team
 from resources.utils import MenuMixin
@@ -48,8 +48,9 @@ class GetInjuriesForPlayer(MenuMixin, ListView):
         return self.get_mixin_context(context, title=f"{self.player}'s injuries")
 
 
-def contacts(request):
-    return HttpResponse('Контакты')
+class Contacts(MenuMixin, TemplateView):
+    template_name = 'resources/contacts.html'
+    title_page = 'Contacts'
 
 
 def login(request):

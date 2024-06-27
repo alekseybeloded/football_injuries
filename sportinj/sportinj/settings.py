@@ -33,6 +33,7 @@ DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
 ALLOWED_HOSTS = ['*']
 INTERNAL_IPS = ['127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', default='').split(',')
 
 # Application definition
 

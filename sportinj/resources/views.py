@@ -21,7 +21,7 @@ class HomePage(MenuMixin, ListView):
 
 class GetPlayersForTeam(LoginRequiredMixin, MenuMixin, ListView):
     template_name = 'resources/player.html'
-    context_object_name = 'Players'
+    context_object_name = 'players'
     paginate_by = 10
 
     def get_queryset(self):

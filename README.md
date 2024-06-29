@@ -1,7 +1,7 @@
 # Football injuries project
 
 ### You can use Football injuries at the following link:
-<p><a href="https://sportinj.ru/" class="external-link" target="_blank"><strong>sportinj.ru</strong></a></p>
+<p><a href="https://sportinj.ru/" class="external-link" style="text-decoration: none" target="_blank"><strong>sportinj.ru</strong></a></p>
 
 ## For developers:
 
@@ -30,7 +30,7 @@ SMTP_PORT=<smtp_port>
 SMTP_SSL=<True>
 ```
 
-* Install <a href="https://docs.docker.com/engine/install/" class="external-link" target="_blank"><strong>Docker</strong></a>
+* Install <a href="https://docs.docker.com/engine/install/" class="external-link" style="text-decoration: none" target="_blank"><strong>Docker</strong></a>
 
 * Pull, build and run docker containers:
 
@@ -40,7 +40,7 @@ docker compose build
 docker compose up -d
 ```
 
-* Follow link <a href="http://127.0.0.1" class="external-link" target="_blank"><strong>http://127.0.0.1:8000</strong></a>
+* Follow link <a href="http://127.0.0.1" class="external-link" style="text-decoration: none" target="_blank"><strong>http://127.0.0.1:8000</strong></a>
 
 * If all steps have been implemented, you will see something like this:
 <image src="images/homepage.png" style="max-width: 100%; height: auto">
@@ -59,7 +59,7 @@ docker compose up -d
 
 * _Optionally (for rented domain) - add public ip to rented domain in domain settings_
 
-* Install docker (follow <a href="https://docs.docker.com/engine/install/" class="external-link" target="_blank"><strong>instructions</strong></a> _include_ **_postinstall steps_**)
+* Install docker (follow <a href="https://docs.docker.com/engine/install/" class="external-link" style="text-decoration: none" target="_blank"><strong>instructions</strong></a> _include_ **_postinstall steps_**)
 
 * Create **.env** file:
     * create variables from section **Install locally/Create file**
@@ -96,4 +96,4 @@ docker compose pull
 docker compose up-d
 ```
 
-* Check link <a href="#" class="external-link" target="_blank"><strong>https://your_domain</strong></a>
+* Check link <a href="#" class="external-link" style="text-decoration: none" target="_blank"><strong>https://your_domain</strong></a>

@@ -25,15 +25,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', get_random_secret_key())
+SECRET_KEY = os.getenv('SECRET_KEY', default=get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 't')
+DEBUG = os.getenv('DEBUG', default='False').lower() in ('true', '1', 't')
 
-ALLOWED_HOSTS = ['*']
-INTERNAL_IPS = ['127.0.0.1']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='127.0.0.1').split(',')
+INTERNAL_IPS = os.getenv('INTERNAL_IPS', default='127.0.0.1').split(',')
 
-CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', default='').split(',')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', default='http://127.0.0.1').split(',')
 
 # Application definition
 
@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'sportinj.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "HOST": os.getenv("POSTGRES_HOST", "db"),
-        "PORT": int(os.getenv("DB_PORT", "5432")),
-        "NAME": os.getenv("POSTGRES_DB", "sportinj"),
-        "USER": os.getenv("POSTGRES_USER", "sportinj"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "sportinj"),
+        "HOST": os.getenv("POSTGRES_HOST", default="db"),
+        "PORT": int(os.getenv("POSTGRES_PORT", default="5432")),
+        "NAME": os.getenv("POSTGRES_DB", default="sportinj"),
+        "USER": os.getenv("POSTGRES_USER", default="sportinj"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="sportinj"),
     }
 }
 
@@ -162,9 +162,9 @@ AUTHENTICATION_BACKENDS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = os.getenv("SMTP_HOST", "smtp.yandex.ru")
-EMAIL_USE_SSL = os.getenv("SMTP_SSL", "True")
-EMAIL_PORT = int(os.getenv("SMTP_PORT", 465))
+EMAIL_HOST = os.getenv("SMTP_HOST", default="smtp.yandex.ru")
+EMAIL_USE_SSL = os.getenv("SMTP_SSL", default="True")
+EMAIL_PORT = int(os.getenv("SMTP_PORT", default=465))
 EMAIL_HOST_USER = os.getenv("SMTP_USER")
 EMAIL_HOST_PASSWORD = os.getenv("SMTP_PASSWORD")
 

@@ -7,24 +7,29 @@ services:
     command: sh -c 'python manage.py makemigrations &&
                 python manage.py migrate &&
                 python manage.py collectstatic --noinput &&
-                gunicorn sportinj.wsgi:application --bind 0.0.0.0'
+                gunicorn sportinj.wsgi:application --bind 0.0.0.0:8000'
     volumes:
       - static_volume:/app/sportinj/staticfiles
       - media_volume:/app/sportinj/media
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:15-alpine
+    restart: unless-stopped
     container_name: sportinj-db
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    env_file:
+      - .env
     volumes:
       - .data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   nginx:
     image: nginx
@@ -33,9 +38,11 @@ services:
       - static_volume:/app/sportinj/staticfiles
       - media_volume:/app/sportinj/media
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
 
     ports:
-      - 8000:8000
+      - 80:80
+      - 443:443
     depends_on:
       - web
 

@@ -15,6 +15,7 @@ psycopg2-binary = "^2.9.9"
 ruff = "^0.4.7"
 python-dotenv = "^1.0.1"
 gunicorn = "^22.0.0"
+djangorestframework = "^3.15.2"
 
 [tool.ruff]
 # Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.

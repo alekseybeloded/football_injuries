@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'django_extensions',
     'debug_toolbar',
+    'rest_framework',
+    'rest_api.apps.RestApiConfig',
 ]
 
 MIDDLEWARE = [

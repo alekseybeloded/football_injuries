@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('resources.urls')),
     path('account/', include('account.urls', namespace='account')),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('api/v1/', include('rest_api.urls', namespace='rest_api')),
 ]
 
 handler404 = views.page_not_found

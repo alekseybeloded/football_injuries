@@ -17,6 +17,9 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 
 class InjurySerializer(serializers.ModelSerializer):
+    team = serializers.CharField(source='player.team.name', read_only=True)
+    player = serializers.CharField(source='player.name', read_only=True)
+
     class Meta:
         model = Injury
-        fields = ('name', 'description')
+        fields = ('name', 'description', 'player', 'team')

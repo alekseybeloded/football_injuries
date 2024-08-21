@@ -16,8 +16,7 @@ class TeamAdmin(admin.ModelAdmin):
 @admin.register(Player)
 class PlayerAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
-    filter_horizontal = ['injuries']
-    list_display = ('id', 'name', 'team', 'get_injuries_for_player', 'time_create')
+    list_display = ('id', 'name', 'team', 'time_create')
     list_display_links = ('id', 'name')
     ordering = ['time_create']
     list_per_page = 20
@@ -34,7 +33,6 @@ class InjuryAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'name',
-        'get_all_players_with_specific_injury',
         'description',
         'time_create',
     )
@@ -44,7 +42,3 @@ class InjuryAdmin(admin.ModelAdmin):
     list_per_page = 20
     search_fields = ['name']
     list_filter = ['name']
-
-    @admin.display(description='players')
-    def get_all_players_with_specific_injury(self, injury):
-        return list(injury.players.all())

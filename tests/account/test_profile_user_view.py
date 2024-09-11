@@ -12,16 +12,14 @@ def test__profile_user__renders_correct_template(admin_client):
 
 
 @pytest.mark.django_db
-def test__profile_user__successful_update_profile(client, django_user_model):
-    user = django_user_model.objects.create_user(username='test_username', email='testemail@mail.ru', password='test_password')
-    login_successful = client.login(username='test_username', password='test_password')
+def test__profile_user__successful_update_profile(client, user):
+    login_successful = client.login(username=user.username, password=user.raw_password)
 
     assert login_successful
 
-
     data = {
-        'first_name': 'test first name',
-        'last_name': 'test last name',
+        'first_name': 'new_first_name',
+        'last_name': 'new_last_name',
     }
 
     response_get = client.get(reverse('account:profile'))
@@ -30,8 +28,8 @@ def test__profile_user__successful_update_profile(client, django_user_model):
 
     assert response_get.status_code == 200
     assert response_post.status_code == 302
-    assert user.first_name == 'test first name'
-    assert user.last_name == 'test last name'
+    assert user.first_name == 'new_first_name'
+    assert user.last_name == 'new_last_name'
 
 
 @pytest.mark.django_db

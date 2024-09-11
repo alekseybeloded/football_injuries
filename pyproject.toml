@@ -77,11 +77,15 @@ quote-style = "single"
 
 
 [tool.pytest.ini_options]
+testpaths = ["tests"]
 DJANGO_SETTINGS_MODULE = "sportinj.settings"
+pythonpath = "sportinj"
 python_files = ["test_*.py", "*_test.py", "testing/python/*.py", "test*.py"]
 addopts = """
            --cov=resources \
+           --cov=account \
            --cov-report=html \
+           --cov-fail-under=90 \
            --cov-report=term-missing \
            --cov-branch \
            --testdox -vv

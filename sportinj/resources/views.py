@@ -4,10 +4,10 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, TemplateView
 
 from resources.models import Player, Team
-from resources.utils import MenuMixin
+from resources.utils import DataMixin
 
 
-class HomePage(MenuMixin, ListView):
+class HomePage(DataMixin, ListView):
     model = Team
     template_name = 'resources/index.html'
     context_object_name = 'teams'
@@ -19,7 +19,7 @@ class HomePage(MenuMixin, ListView):
         return self.get_mixin_context(context)
 
 
-class GetPlayersForTeam(LoginRequiredMixin, MenuMixin, ListView):
+class GetPlayersForTeam(LoginRequiredMixin, DataMixin, ListView):
     template_name = 'resources/player.html'
     context_object_name = 'players'
     paginate_by = 10
@@ -33,7 +33,7 @@ class GetPlayersForTeam(LoginRequiredMixin, MenuMixin, ListView):
         return self.get_mixin_context(context, team=self.team, title=f'{self.team} players')
 
 
-class GetInjuriesForPlayer(MenuMixin, ListView):
+class GetInjuriesForPlayer(DataMixin, ListView):
     template_name = 'resources/injury.html'
     context_object_name = 'injuries'
     title_page = 'Injuries'
@@ -48,7 +48,7 @@ class GetInjuriesForPlayer(MenuMixin, ListView):
         return self.get_mixin_context(context, title=f"{self.player}'s injuries")
 
 
-class Contacts(MenuMixin, TemplateView):
+class Contacts(DataMixin, TemplateView):
     template_name = 'resources/contacts.html'
     title_page = 'Contacts'
 

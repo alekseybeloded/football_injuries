@@ -27,6 +27,6 @@ urlpatterns = [
     path('api/v1/', include('rest_api.urls', namespace='rest_api')),
 ]
 
-handler404 = views.page_not_found
+handler404 = views.Custom404View.as_view()
 admin.site.site_header = 'Administration Football injuries'
 admin.site.index_title = 'Football injuries'

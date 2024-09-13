@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.views import View
 from django.views.generic import ListView, TemplateView
 
 from resources.models import Player, Team
@@ -52,9 +53,10 @@ class ContactPageView(ExtraContextMixin, TemplateView):
     title_page = 'Contacts'
 
 
+class Custom404View(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'errors/404.html', status=404)
+
+
 def login(request):
     return HttpResponse('Авторизация')
-
-
-def page_not_found(request, exception):
-    return HttpResponseNotFound('<h1>Page not found</h1>')

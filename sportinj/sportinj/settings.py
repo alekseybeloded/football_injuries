@@ -153,8 +153,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'team-list'
+LOGOUT_REDIRECT_URL = 'team-list'
 LOGIN_URL = 'account:login'
 
 AUTHENTICATION_BACKENDS = [

@@ -3,7 +3,7 @@ menu = [
 ]
 
 
-class DataMixin:
+class ExtraContextMixin:
     title_page = None
     extra_context = {}
 

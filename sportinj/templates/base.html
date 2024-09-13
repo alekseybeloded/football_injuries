@@ -22,7 +22,7 @@
       </div>
       {% block mainmenu %}
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-        <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="{% url 'team-list' %}" class="nav-link px-2 link-secondary">Home</a></li>
         {% for item in mainmenu %}
         <li><a href="{% url item.url_name %}" class="nav-link px-2">{{ item.title }}</a></li>
         {% endfor %}

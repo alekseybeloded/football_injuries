@@ -1,15 +1,15 @@
 import pytest
-from account.forms import ProfileUserForm
+from account.forms import UserProfileForm
 
 
 @pytest.mark.django_db
-def test__profile_user_form__valid(user):
+def test__user_profile_form__valid(user):
     form_data = {
         'first_name': 'new_first_name',
         'last_name': 'new_last_name',
     }
 
-    form = ProfileUserForm(instance=user, data=form_data)
+    form = UserProfileForm(instance=user, data=form_data)
 
     assert form.is_valid()
 

@@ -4,13 +4,13 @@ from django.urls import reverse
 
 
 @pytest.mark.django_db
-def test__get_injuries_for_player__renders_correct_template(admin_client, team, player):
+def test__player_injury_list_view__renders_correct_template(admin_client, team, player):
     injury_1 = Injury.objects.create(name='Injury 1', player=player)
     injury_2 = Injury.objects.create(name='Injury 2', player=player)
 
     response = admin_client.get(
         reverse(
-            'injuries',
+            'player-injuries',
             kwargs={
                 'team_slug': team.slug,
                 'player_slug': player.slug,
@@ -25,10 +25,10 @@ def test__get_injuries_for_player__renders_correct_template(admin_client, team, 
 
 
 @pytest.mark.django_db
-def test__get_injuries_for_player__with_no_injuries(admin_client, team, player):
+def test__player_injury_list_view__with_no_injuries(admin_client, team, player):
     response = admin_client.get(
         reverse(
-            'injuries',
+            'player-injuries',
             kwargs={
                 'team_slug': team.slug,
                 'player_slug': player.slug
@@ -41,10 +41,10 @@ def test__get_injuries_for_player__with_no_injuries(admin_client, team, player):
 
 
 @pytest.mark.django_db
-def test__get_injuries_for_player__with_invalid_slug(admin_client):
+def test__player_injury_list_view__with_invalid_slug(admin_client):
     response = admin_client.get(
         reverse(
-            'injuries',
+            'player-injuries',
             kwargs={
                 'team_slug': 'non-existent-team',
                 'player_slug': 'non-existent-player',
@@ -53,4 +53,3 @@ def test__get_injuries_for_player__with_invalid_slug(admin_client):
     )
 
     assert response.status_code == 404
-

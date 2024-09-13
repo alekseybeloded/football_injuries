@@ -4,7 +4,7 @@
 
 <div class="items-list">
   {% for team in teams %}
-    <p><a href="{% url 'players' team.slug %}" class="text-decoration-none">{{ team.name }}</a></p>
+    <p><a href="{% url 'team-players' team.slug %}" class="text-decoration-none">{{ team.name }}</a></p>
   {% endfor %}
 </div>
 

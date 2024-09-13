@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.django_db
-def test__login_user__valid_username_and_password(client, user):
+def test__user_login_view__valid_username_and_password(client, user):
     response = client.post(
         reverse('account:login'),
         {
@@ -33,7 +33,7 @@ def test__login_user__valid_username_and_password(client, user):
         ),
     ],
 )
-def test__login_user__invalid_username_or_password(
+def test__user_login_view__invalid_username_or_password(
     client,
     user,
     username, password,
@@ -46,7 +46,7 @@ def test__login_user__invalid_username_or_password(
 
 
 @pytest.mark.django_db
-def test__login_user__renders_correct_template(client):
+def test__user_login_view__renders_correct_template(client):
     response = client.get(reverse('account:login'))
 
     assert response.status_code == 200

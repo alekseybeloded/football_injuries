@@ -4,11 +4,11 @@ from resources.models import Team
 
 
 @pytest.mark.django_db
-def test__homepage__renders_correct_template(client):
+def test__team_list_view__renders_correct_template(client):
     team_1 = Team.objects.create(name='Team 1')
     team_2 = Team.objects.create(name='Team 2')
 
-    response = client.get(reverse('home'))
+    response = client.get(reverse('team-list'))
     teams = response.context['teams']
 
     assert response.status_code == 200
@@ -19,12 +19,12 @@ def test__homepage__renders_correct_template(client):
 
 
 @pytest.mark.django_db
-def test__homepage__pagination(client):
+def test__team_list_view__pagination(client):
     for i in range(11):
         Team.objects.create(name=f'Team {i}')
 
-    response_page_1 = client.get(reverse('home'))
-    response_page_2 = client.get(reverse('home') + '?page=2')
+    response_page_1 = client.get(reverse('team-list'))
+    response_page_2 = client.get(reverse('team-list') + '?page=2')
     teams_page_1 = response_page_1.context['teams']
     teams_page_2 = response_page_2.context['teams']
 

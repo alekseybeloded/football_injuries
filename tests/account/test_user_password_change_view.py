@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.django_db
-def test__user_password_change__renders_correct_template(admin_client):
+def test__user_password_change_view__renders_correct_template(admin_client):
     response = admin_client.get(reverse('account:password_change'))
 
     assert response.status_code == 200
@@ -11,7 +11,7 @@ def test__user_password_change__renders_correct_template(admin_client):
     assert response.context['title'] == 'Password change'
 
 
-def test__user_password_change__successful_update_password(client, user):
+def test__user_password_change_view__successful_update_password(client, user):
     client.login(username=user.username, password=user.raw_password)
 
     response_get = client.get(reverse('account:password_change'))
@@ -57,7 +57,7 @@ def test__user_password_change__successful_update_password(client, user):
         ),
     ],
 )
-def test_user_password_change_invalid_data(
+def test__user_password_change_view__invalid_data(
     client,
     user,
     old_password,

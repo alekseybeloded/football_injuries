@@ -13,11 +13,11 @@ from account import views
 app_name = 'account'
 
 urlpatterns = [
-    path('login/', views.LoginUser.as_view(), name='login'),
+    path('login/', views.UserLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('register/', views.RegisterUser.as_view(), name='register'),
-    path('profile/', views.ProfileUser.as_view(), name='profile'),
-    path('password-change/', views.UserPasswordChange.as_view(), name='password_change'),
+    path('register/', views.UserRegistrationView.as_view(), name='register'),
+    path('profile/', views.UserProfileUpdateView.as_view(), name='profile'),
+    path('password-change/', views.UserPasswordChangeView.as_view(), name='password_change'),
     path(
         'password-change/done/',
         PasswordChangeDoneView.as_view(

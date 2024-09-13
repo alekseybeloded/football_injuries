@@ -3,7 +3,7 @@
 {% block content %}
 <div class="items-list">
   {% for player in players %}
-  <p><a href="{% url 'injuries' team.slug player.slug %}" class="text-decoration-none">{{ player.name }}</a></p>
+  <p><a href="{% url 'player-injuries' team.slug player.slug %}" class="text-decoration-none">{{ player.name }}</a></p>
   {% endfor %}
 </div>
 {% endblock %}

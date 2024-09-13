@@ -37,7 +37,6 @@ class PlayerInjuryListView(ExtraContextMixin, ListView):
     template_name = 'resources/injury.html'
     context_object_name = 'injuries'
     title_page = 'Injuries'
-    paginate_by = 10
 
     def get_queryset(self):
         self.player = get_object_or_404(Player, slug=self.kwargs['player_slug'])

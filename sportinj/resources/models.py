@@ -31,7 +31,7 @@ class Player(models.Model):
     class Meta:
         ordering = ['time_create']
 
-    def __str__(self) -> str:
+    def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):

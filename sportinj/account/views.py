@@ -8,22 +8,22 @@ from django.views.generic import CreateView, UpdateView
 from account import forms
 
 
-class LoginUser(LoginView):
-    form_class = forms.LoginUserForm
+class UserLoginView(LoginView):
+    form_class = forms.UserLoginForm
     template_name = 'account/login.html'
     extra_context = {'title': 'Authorization'}
 
 
-class RegisterUser(CreateView):
-    form_class = forms.RegisterUserForm
+class UserRegistrationView(CreateView):
+    form_class = forms.UserRegistrationForm
     template_name = 'account/register.html'
     extra_context = {'title': 'Registration'}
     success_url = reverse_lazy('account:login')
 
 
-class ProfileUser(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+class UserProfileUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = get_user_model()
-    form_class = forms.ProfileUserForm
+    form_class = forms.UserProfileForm
     template_name = 'account/profile.html'
     extra_context = {'title': "Profile"}
     success_message = 'Profile was changed successfully'
@@ -35,7 +35,7 @@ class ProfileUser(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return self.request.user
 
 
-class UserPasswordChange(SuccessMessageMixin, PasswordChangeView):
+class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     form_class = forms.UserPasswordChangeForm
     success_url = reverse_lazy('account:password_change_done')
     template_name = 'account/password_change_form.html'

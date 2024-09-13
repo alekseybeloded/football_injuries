@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, UserCreationForm
 
 
-class LoginUserForm(AuthenticationForm):
+class UserLoginForm(AuthenticationForm):
     class Meta:
         model = get_user_model()
         fields = ['username', 'password']
@@ -16,7 +16,7 @@ class LoginUserForm(AuthenticationForm):
     }
 
 
-class RegisterUserForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     username = forms.CharField()
     password1 = forms.CharField()
     password2 = forms.CharField()
@@ -32,7 +32,7 @@ class RegisterUserForm(UserCreationForm):
         return email
 
 
-class ProfileUserForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     username = forms.CharField(disabled=True)
     email = forms.CharField(disabled=True)
 

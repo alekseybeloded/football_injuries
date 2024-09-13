@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.django_db
-def test__register_user__success_registration(client):
+def test__user_registration_view__success_registration(client):
     data = {
         'username': 'valid_username',
         'email': 'valid@mail.com',
@@ -54,7 +54,7 @@ def test__register_user__success_registration(client):
         )
     ],
 )
-def test__register_user__invalid_data(
+def test__user_registration_view__invalid_data(
     client,
     username,
     email,
@@ -75,7 +75,7 @@ def test__register_user__invalid_data(
 
 
 @pytest.mark.django_db
-def test__register_user__renders_correct_template(client):
+def test__user_registration_view__renders_correct_template(client):
     response = client.get(reverse('account:register'))
 
     assert response.status_code == 200

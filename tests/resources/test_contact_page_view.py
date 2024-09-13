@@ -3,7 +3,7 @@ from django.urls import reverse
 
 
 @pytest.mark.django_db
-def test__contacts__renders_correct_template(client):
+def test__contact_page_view__renders_correct_template(client):
     response = client.get(reverse('contacts'))
 
     assert response.status_code == 200

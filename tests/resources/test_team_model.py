@@ -1,4 +1,3 @@
-from unittest.mock import patch
 import pytest
 from resources.models import Team
 

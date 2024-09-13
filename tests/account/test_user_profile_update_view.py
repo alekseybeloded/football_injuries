@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.django_db
-def test__profile_user__renders_correct_template(admin_client):
+def test__user_profile_update_view__renders_correct_template(admin_client):
     response = admin_client.get(reverse('account:profile'))
 
     assert response.status_code == 200
@@ -12,7 +12,7 @@ def test__profile_user__renders_correct_template(admin_client):
 
 
 @pytest.mark.django_db
-def test__profile_user__successful_update_profile(client, user):
+def test__user_profile_update_view__successful_update_profile(client, user):
     login_successful = client.login(username=user.username, password=user.raw_password)
 
     assert login_successful
@@ -33,7 +33,7 @@ def test__profile_user__successful_update_profile(client, user):
 
 
 @pytest.mark.django_db
-def test__profile_user__user_not_authorized(client):
+def test__user_profile_update_view__user_not_authorized(client):
     response = client.get(reverse('account:profile'))
 
     assert response.status_code == 302

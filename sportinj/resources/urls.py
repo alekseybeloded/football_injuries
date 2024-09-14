@@ -11,5 +11,4 @@ urlpatterns = [
         name='player-injuries',
     ),
     path('contacts/', views.ContactPageView.as_view(), name='contacts'),
-    path('login/', views.login, name='login'),
 ]

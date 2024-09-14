@@ -56,7 +56,3 @@ class ContactPageView(ExtraContextMixin, TemplateView):
 class Custom404View(View):
     def get(self, request, *args, **kwargs):
         return render(request, 'errors/404.html', status=404)
-
-
-def login(request):
-    return HttpResponse('Авторизация')

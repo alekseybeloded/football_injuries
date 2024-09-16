@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 def test__authentication__valid_email_and_password(user, email_auth_backend):
-    request = RequestFactory().post(reverse('login'))
+    request = RequestFactory().post(reverse('account:login'))
     authenticated_user = email_auth_backend.authenticate(
         request,
         username=user.email,
@@ -33,7 +33,7 @@ def test__authentication__valid_email_and_password(user, email_auth_backend):
     ]
 )
 def test__authentication__invalid(user, email_auth_backend, email, password, expected_result):
-    request = RequestFactory().post(reverse('login'))
+    request = RequestFactory().post(reverse('account:login'))
     authenticated_user = email_auth_backend.authenticate(
         request,
         username=email,

@@ -27,16 +27,11 @@ jobs:
       postgres:
         image: postgres:15-alpine
         env:
-          POSTGRES_DB: test_sportinj
+          POSTGRES_DB: sportinj
           POSTGRES_USER: sportinj
           POSTGRES_PASSWORD: sportinj
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U sportinj"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     steps:
       - uses: actions/checkout@v4
       - name: set up Python
@@ -45,5 +40,14 @@ jobs:
           python-version: 3.11
       - name: install dependencies
         run: pip install --upgrade pip && pip install poetry && poetry install
+      - name: Wait for Postgres
+        run: |
+          until pg_isready -h postgres -p 5432 -U sportinj; do
+            echo "Waiting for Postgres..."
+            sleep 3
+          done
+      - name: Run migrations
+        run: poetry run python manage.py migrate
+
       - name: run pytest
         run: poetry run pytest --cov -vv .

@@ -47,6 +47,6 @@ jobs:
         run: pip install --upgrade pip && pip install poetry && poetry install
       - name: Run migrations
         run: poetry run python manage.py migrate
-
+        working-directory: ./sportinj
       - name: run pytest
         run: poetry run pytest --cov -vv .

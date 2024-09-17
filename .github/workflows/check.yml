@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: lint
     services:
-      postgres:
+      db:
         image: postgres:15-alpine
         env:
           POSTGRES_DB: sportinj
@@ -47,7 +47,7 @@ jobs:
         run: pip install --upgrade pip && pip install poetry && poetry install
       - name: Wait for Postgres
         run: |
-          until pg_isready -h postgres -p 5432 -U sportinj; do
+          until pg_isready -h db -p 5432 -U sportinj; do
             echo "Waiting for Postgres..."
             sleep 3
           done

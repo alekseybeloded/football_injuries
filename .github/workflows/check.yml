@@ -32,4 +32,4 @@ jobs:
       - name: install dependencies
         run: pip install --upgrade pip && pip install poetry && poetry install
       - name: run pytest
-        run: pytest --cov -vv .
+        run: poetry run pytest --cov -vv .

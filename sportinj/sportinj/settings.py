@@ -93,7 +93,7 @@ WSGI_APPLICATION = 'sportinj.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "HOST": os.getenv("POSTGRES_HOST", default="db"),
+        "HOST": os.getenv("POSTGRES_HOST", default="localhost"),
         "PORT": int(os.getenv("POSTGRES_PORT", default="5432")),
         "NAME": os.getenv("POSTGRES_DB", default="sportinj"),
         "USER": os.getenv("POSTGRES_USER", default="sportinj"),

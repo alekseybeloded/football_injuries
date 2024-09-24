@@ -1,6 +1,13 @@
-menu = [
-    {'title': 'Contacts', 'url_name': 'contacts'},
-]
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True, kw_only=True, slots=True)
+class MenuItem:
+    title: str
+    url_name: str
+
+
+menu = [MenuItem(title='Contacts', url_name='contacts')]
 
 
 class ExtraContextMixin:

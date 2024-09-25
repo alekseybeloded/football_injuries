@@ -17,10 +17,6 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegistrationForm(UserCreationForm):
-    username = forms.CharField()
-    password1 = forms.CharField()
-    password2 = forms.CharField()
-
     class Meta:
         model = get_user_model()
         fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']

@@ -1,11 +1,23 @@
 # Football injuries project
 
-### You can use Football injuries at the following link:
+## Introduction
+
+Welcome to the "Football Injuries Project"! This website is designed to provide users with access to information about injuries sustained by football players, as well as details about the teams and players associated with them.
+
+In our project, you will be able to:
+
+* Learn about various types of injuries that football players encounter.
+* Access information about specific players and their teams.
+
+We aim to create a user-friendly and informative resource for football enthusiasts, coaches, medical professionals, and anyone interested in the health and well-being of athletes. Our goal in future is to raise awareness about injuries in football and their consequences, as well as to provide valuable data for analysis and research.
+
+Join us on this exciting journey into the world of football injuries!
+
+### You can use Football injuries at the following link
+
 <p><a href="https://sportinj.ru/" class="external-link" style="text-decoration: none" target="_blank"><strong>sportinj.ru</strong></a></p>
 
-## For developers:
-
-### Install locally:
+## Install locally
 
 * Clone repo:
 ```git clone https://github.com/alekseybeloded/football_injuries.git```
@@ -49,7 +61,7 @@ docker compose up -d
 <image src="images/homepage_dark.png" style="max-width: 100%; height: auto">
 
 
-### Deploy
+## Deploy
 
 * Rent virtual maschine with static IP / rent domain
 

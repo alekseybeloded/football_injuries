@@ -109,3 +109,71 @@ docker compose up-d
 ```
 
 * Check link <a href="#" class="external-link" style="text-decoration: none" target="_blank"><strong>https://your_domain</strong></a>
+
+## Football Injuries Project - REST API Documentation
+
+### Overview
+
+The Football Injuries Project provides a REST API to access information about teams, players, and injuries. This API is built using Django REST Framework and allows for read-only access to the data.
+
+### API Endpoints
+
+The following endpoints are available in the REST API:
+
+#### Teams
+
+GET /teams/: Retrieve a list of all teams.
+GET /teams/{id}/: Retrieve details of a specific team by ID.
+
+#### Players
+
+GET /players/: Retrieve a list of all players.
+GET /players/{id}/: Retrieve details of a specific player by ID.
+
+#### Injuries
+
+GET /injuries/: Retrieve a list of all injuries.
+GET /injuries/{id}/: Retrieve details of a specific injury by ID.
+
+### Models
+
+The API is built on the following models:
+
+#### Team
+
+name: The name of the team.
+description: A brief description of the team.
+
+#### Player
+
+name: The name of the player.
+description: A brief description of the player.
+team: The team to which the player belongs.
+
+#### Injury
+
+name: The name of the injury.
+description: A brief description of the injury.
+player: The player who has the injury.
+team: The team of the injured player.
+
+## Testing the API
+
+To test the API, you can use tools like Postman or cURL. Here are some example requests:
+
+Get all teams
+```
+curl -X GET https://sportinj.ru/api/v1/teams/
+```
+Get a specific player
+```
+curl -X GET https://sportinj.ru/api/v1/players/70/
+```
+Get all injuries
+```
+curl -X GET https://sportinj.ru/api/v1/injuries/
+```
+
+### Conclusion
+
+This documentation provides a comprehensive overview of the REST API for the Football Injuries Project. You can use the provided endpoints to access data about teams, players, and injuries in a structured format.

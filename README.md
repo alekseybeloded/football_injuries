@@ -11,8 +11,6 @@ In our project, you will be able to:
 
 We aim to create a user-friendly and informative resource for football enthusiasts, coaches, medical professionals, and anyone interested in the health and well-being of athletes. Our goal in future is to raise awareness about injuries in football and their consequences, as well as to provide valuable data for analysis and research.
 
-Join us on this exciting journey into the world of football injuries!
-
 ### You can use Football injuries at the following link
 
 <p><a href="https://sportinj.ru/" class="external-link" style="text-decoration: none" target="_blank"><strong>sportinj.ru</strong></a></p>
@@ -123,16 +121,19 @@ The following endpoints are available in the REST API:
 #### Teams
 
 GET /teams/: Retrieve a list of all teams.
+
 GET /teams/{id}/: Retrieve details of a specific team by ID.
 
 #### Players
 
 GET /players/: Retrieve a list of all players.
+
 GET /players/{id}/: Retrieve details of a specific player by ID.
 
 #### Injuries
 
 GET /injuries/: Retrieve a list of all injuries.
+
 GET /injuries/{id}/: Retrieve details of a specific injury by ID.
 
 ### Models
@@ -142,19 +143,25 @@ The API is built on the following models:
 #### Team
 
 name: The name of the team.
+
 description: A brief description of the team.
 
 #### Player
 
 name: The name of the player.
+
 description: A brief description of the player.
+
 team: The team to which the player belongs.
 
 #### Injury
 
 name: The name of the injury.
+
 description: A brief description of the injury.
+
 player: The player who has the injury.
+
 team: The team of the injured player.
 
 ## Testing the API
@@ -162,15 +169,20 @@ team: The team of the injured player.
 To test the API, you can use tools like Postman or cURL. Here are some example requests:
 
 Get all teams
-```
+
+```bash
 curl -X GET https://sportinj.ru/api/v1/teams/
 ```
+
 Get a specific player
-```
+
+```bash
 curl -X GET https://sportinj.ru/api/v1/players/70/
 ```
+
 Get all injuries
-```
+
+```bash
 curl -X GET https://sportinj.ru/api/v1/injuries/
 ```
 

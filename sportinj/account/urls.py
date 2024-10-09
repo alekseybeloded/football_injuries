@@ -23,7 +23,7 @@ urlpatterns = [
         PasswordChangeDoneView.as_view(
             template_name='account/password_change_done.html'
         ),
-        name='password_change_done'
+        name='password_change_done',
     ),
     path(
         'password-reset/',
@@ -32,14 +32,14 @@ urlpatterns = [
             email_template_name='account/password_reset_email.html',
             success_url=reverse_lazy('account:password_reset_done')
         ),
-        name='password_reset'
+        name='password_reset',
     ),
     path(
         'password-reset/done',
         PasswordResetDoneView.as_view(
             template_name='account/password_reset_done.html'
         ),
-        name='password_reset_done'
+        name='password_reset_done',
     ),
     path(
         'password-reset/<uidb64>/<token>/',
@@ -47,13 +47,38 @@ urlpatterns = [
             template_name='account/password_reset_confirm.html',
             success_url=reverse_lazy('account:password_reset_complete')
         ),
-        name='password_reset_confirm'
+        name='password_reset_confirm',
     ),
     path(
         'password-reset/complete/',
         PasswordResetCompleteView.as_view(
             template_name='account/password_reset_complete.html'
         ),
-        name='password_reset_complete'
+        name='password_reset_complete',
+    ),
+    path(
+        'confirm-register/',
+        views.UserConfirmRegisterView.as_view(),
+        name='user_confirm_register',
+    ),
+    path(
+        'activate/<uidb64>/<token>/',
+        views.UserConfirmRegisterActivateView.as_view(),
+        name='user_confirm_register_activate',
+    ),
+    path(
+        'confirm-register/success/',
+        views.UserConfirmRegisterSuccessView.as_view(),
+        name='user_confirm_register_success',
+    ),
+    path(
+        'confirm-register/fail/',
+        views.UserConfirmRegisterFailView.as_view(),
+        name='user_confirm_register_fail',
+    ),
+    path(
+        'already-confirm-register/',
+        views.UserAlreadyConfirmRegisterView.as_view(),
+        name='user_already_confirm_register',
     ),
 ]

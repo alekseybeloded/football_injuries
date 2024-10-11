@@ -24,6 +24,7 @@ def test__user_registration_form__valid():
 
 @pytest.mark.django_db
 def test__user_registration_form__invalid_email_exists(user):
+    user = user()
     form_data = {
         'username': 'new_valid_username',
         'email': user.email,

@@ -4,6 +4,7 @@ from account.forms import UserLoginForm
 
 @pytest.mark.django_db
 def test__user_login_form__valid(user):
+    user = user()
     form_data = {'username': user.username, 'password': user.raw_password}
     form = UserLoginForm(data=form_data)
 

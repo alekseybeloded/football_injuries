@@ -4,6 +4,7 @@ import pytest
 
 @pytest.mark.django_db
 def test__user_login_view__valid_username_and_password(client, user):
+    user = user()
     response = client.post(
         reverse('account:login'),
         {

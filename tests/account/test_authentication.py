@@ -4,6 +4,7 @@ from django.urls import reverse
 
 
 def test__authentication__valid_email_and_password(user, email_auth_backend):
+    user = user()
     request = RequestFactory().post(reverse('account:login'))
     authenticated_user = email_auth_backend.authenticate(
         request,
@@ -44,6 +45,7 @@ def test__authentication__invalid(user, email_auth_backend, email, password, exp
 
 
 def test__get_user__valid_id(user, email_auth_backend):
+    user = user()
     fetched_user = email_auth_backend.get_user(user.id)
 
     assert fetched_user is not None

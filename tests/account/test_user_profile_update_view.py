@@ -13,6 +13,7 @@ def test__user_profile_update_view__renders_correct_template(admin_client):
 
 @pytest.mark.django_db
 def test__user_profile_update_view__successful_update_profile(client, user):
+    user = user()
     login_successful = client.login(username=user.username, password=user.raw_password)
 
     assert login_successful

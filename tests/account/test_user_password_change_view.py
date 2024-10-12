@@ -12,6 +12,7 @@ def test__user_password_change_view__renders_correct_template(admin_client):
 
 
 def test__user_password_change_view__successful_update_password(client, user):
+    user = user()
     client.login(username=user.username, password=user.raw_password)
 
     response_get = client.get(reverse('account:password_change'))
@@ -65,6 +66,7 @@ def test__user_password_change_view__invalid_data(
     new_password2,
     expected_status_code,
 ):
+    user = user()
     data = {
         'old_password': old_password,
         'new_password1': new_password1,

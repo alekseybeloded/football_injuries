@@ -4,7 +4,7 @@ from account.forms import UserPasswordChangeForm
 
 @pytest.mark.django_db
 def test__user_password_change_form__valid(user):
-
+    user = user()
     form_data = {
         'old_password': user.raw_password,
         'new_password1': 'new_valid_password',
@@ -57,6 +57,7 @@ def test__user_password_change_form__invalid(
     expected_error,
     form_is_valid
 ):
+    user = user()
     form_data = {
         'old_password': old_password,
         'new_password1': new_password1,

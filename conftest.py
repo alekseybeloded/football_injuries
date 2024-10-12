@@ -6,16 +6,26 @@ from resources.models import Team, Player, Injury
 
 @pytest.fixture
 def user(db):
-    user = get_user_model()
-    user = user.objects.create_user(
+    def create_user(
         username='valid_username',
         email='valid@mail.com',
         password='valid_password',
         first_name='first_name',
-        last_name='last_name'
-    )
-    user.raw_password = 'valid_password'
-    return user
+        last_name='last_name',
+        is_active=True,
+    ):
+        user = get_user_model()
+        user = user.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            first_name=first_name,
+            last_name=last_name,
+            is_active=is_active,
+        )
+        user.raw_password = 'valid_password'
+        return user
+    return create_user
 
 
 @pytest.fixture

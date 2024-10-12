@@ -4,6 +4,7 @@ from account.forms import UserProfileForm
 
 @pytest.mark.django_db
 def test__user_profile_form__valid(user):
+    user = user()
     form_data = {
         'first_name': 'new_first_name',
         'last_name': 'new_last_name',

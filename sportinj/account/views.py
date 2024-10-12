@@ -3,15 +3,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.utils.encoding import force_str
-from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.generic import CreateView, TemplateView, UpdateView, View
 from resources.utils import ExtraContextMixin
 
 from account import forms
+from sportinj import settings
 
 
 class UserLoginView(LoginView):
@@ -29,9 +32,37 @@ class UserRegistrationView(CreateView):
     def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = False
-        user.request = self.request
         user.save()
+
+        self.send_confirmation_by_email(user)
+
         return HttpResponseRedirect(self.success_url)
+
+    def send_confirmation_by_email(self, user):
+        token = default_token_generator.make_token(user)
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        protocol = self.request.scheme
+        domain = self.request.get_host()
+
+        email_title = 'Confirm registration'
+        email_body = render_to_string(
+            'account/user_confirm_register_email.html',
+            {
+                'site_name': domain,
+                'protocol': protocol,
+                'domain': domain,
+                'uid': uid,
+                'token': token,
+            }
+        )
+
+        send_mail(
+            email_title,
+            email_body,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
 
 
 class UserProfileUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):

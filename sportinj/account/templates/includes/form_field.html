@@ -5,7 +5,15 @@
          name="{{ field.name }}"
          placeholder="{{ field.label }}"
          value="{{ field.value|default_if_none:'' }}">
+         {% if readonly %}readonly{% endif %}>
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+  {% if readonly %}
+    <span class="input-group-text" title="Editing is not allowed">
+      <i class="fas fa-lock"></i>
+    </span>
+  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+  {% endif %}
 
   {% if field.errors %}
   <div class="invalid-feedback d-block">

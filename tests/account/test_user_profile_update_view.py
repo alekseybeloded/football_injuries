@@ -19,6 +19,8 @@ def test__user_profile_update_view__successful_update_profile(client, user):
     assert login_successful
 
     data = {
+        'username': user.username,
+        'email': user.email,
         'first_name': 'new_first_name',
         'last_name': 'new_last_name',
     }

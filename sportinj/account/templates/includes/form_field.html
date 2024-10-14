@@ -1,10 +1,10 @@
 <div class="form-floating mb-2">
   <input type="{{ field.field.widget.input_type }}"
-         class="form-control{% if field.errors %} is-invalid{% endif %}"
-         id="{{ field.id_for_label }}"
-         name="{{ field.name }}"
-         placeholder="{{ field.label }}"
-         value="{{ field.value|default_if_none:'' }}">
+    class="form-control{% if field.errors %} is-invalid{% endif %}"
+    id="{{ field.id_for_label }}"
+    name="{{ field.name }}"
+    placeholder="{{ field.label }}"
+    value="{{ field.value|default_if_none:'' }}">
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
 
   {% if field.errors %}

@@ -1,19 +1,11 @@
 <div class="form-floating mb-2">
   <input type="{{ field.field.widget.input_type }}"
-         class="form-control{% if field.errors %} is-invalid{% endif %}"
-         id="{{ field.id_for_label }}"
-         name="{{ field.name }}"
-         placeholder="{{ field.label }}"
-         value="{{ field.value|default_if_none:'' }}">
-         {% if readonly %}readonly{% endif %}>
+    class="form-control{% if field.errors %} is-invalid{% endif %}"
+    id="{{ field.id_for_label }}"
+    name="{{ field.name }}"
+    placeholder="{{ field.label }}"
+    value="{{ field.value|default_if_none:'' }}">
   <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-
-  {% if readonly %}
-    <span class="input-group-text" title="Editing is not allowed">
-      <i class="fas fa-lock"></i>
-    </span>
-  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-  {% endif %}
 
   {% if field.errors %}
   <div class="invalid-feedback d-block">

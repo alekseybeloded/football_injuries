@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import LoginView, PasswordChangeView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -84,6 +84,13 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     success_url = reverse_lazy('account:password_change_done')
     template_name = 'account/password_change_form.html'
     title = "Password change"
+
+
+class UserPasswordResetView(PasswordResetView):
+    form_class = forms.UserPasswordResetForm
+    template_name = 'account/password_reset_form.html'
+    email_template_name = 'account/password_reset_email.html'
+    success_url = reverse_lazy('account:password_reset_done')
 
 
 class UserConfirmRegisterView(ExtraContextMixin, TemplateView):

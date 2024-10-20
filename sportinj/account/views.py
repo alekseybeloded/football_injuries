@@ -8,8 +8,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, TemplateView, UpdateView, View
 from resources.utils import ExtraContextMixin
 
@@ -17,12 +19,14 @@ from account import forms
 from sportinj import settings
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserLoginView(LoginView):
     form_class = forms.UserLoginForm
     template_name = 'account/login.html'
     extra_context = {'title': 'Authorization'}
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserRegistrationView(CreateView):
     form_class = forms.UserRegistrationForm
     template_name = 'account/register.html'
@@ -79,6 +83,7 @@ class UserProfileUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView)
         return self.request.user
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
     form_class = forms.UserPasswordChangeForm
     success_url = reverse_lazy('account:password_change_done')
@@ -93,6 +98,7 @@ class UserPasswordResetView(PasswordResetView):
     success_url = reverse_lazy('account:password_reset_done')
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserConfirmRegisterView(ExtraContextMixin, TemplateView):
     template_name = 'account/user_confirm_register.html'
     title_page = 'Confirm register'
@@ -120,16 +126,19 @@ class UserConfirmRegisterActivateView(View):
             return redirect('account:user_confirm_register_fail')
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserConfirmRegisterSuccessView(ExtraContextMixin, TemplateView):
     template_name = 'account/user_confirm_register_success.html'
     title_page = 'Successful registration'
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserConfirmRegisterFailView(ExtraContextMixin, TemplateView):
     template_name = 'account/user_confirm_register_fail.html'
     title_page = 'Failed registration'
 
 
+@method_decorator(cache_page(timeout=None), name='get')
 class UserAlreadyConfirmRegisterView(ExtraContextMixin, TemplateView):
     template_name = 'account/user_already_confirm_register.html'
     title_page = 'Confirm registration'

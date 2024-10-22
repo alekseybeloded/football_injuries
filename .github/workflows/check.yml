@@ -38,7 +38,7 @@ jobs:
           --health-timeout 10s
           --health-retries 10
       redis:
-        image: "redis:apline"
+        image: "redis:alpine"
         ports:
           - 6379:6379
     steps:

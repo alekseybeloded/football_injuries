@@ -37,6 +37,10 @@ jobs:
           --health-interval 20s
           --health-timeout 10s
           --health-retries 10
+      redis:
+        image: "redis:alpine"
+        ports:
+          - 6379:6379
     steps:
       - uses: actions/checkout@v4
       - name: set up Python

@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.contrib.auth import get_user_model
-from django.contrib.auth.tokens import default_token_generator
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -14,7 +14,6 @@ User = get_user_model()
 @shared_task
 def send_confirmation_by_email(scheme, host, user_pk):
     user = User.objects.get(pk=user_pk)
-    token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     protocol = scheme
     domain = host
@@ -27,7 +26,7 @@ def send_confirmation_by_email(scheme, host, user_pk):
             'protocol': protocol,
             'domain': domain,
             'uid': uid,
-            'token': token,
+            'token': cache.get(f'account_{user_pk}_verification_token')
         }
     )
 

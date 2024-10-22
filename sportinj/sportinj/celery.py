@@ -2,7 +2,7 @@ import os
 
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proj.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sportinj.settings')
 
 app = Celery('sportinj')
 

@@ -91,13 +91,13 @@ WSGI_APPLICATION = 'sportinj.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "HOST": os.getenv("POSTGRES_HOST", default="localhost"),
-        "PORT": int(os.getenv("POSTGRES_PORT", default="5432")),
-        "NAME": os.getenv("POSTGRES_DB", default="sportinj"),
-        "USER": os.getenv("POSTGRES_USER", default="sportinj"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", default="sportinj"),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': os.getenv('POSTGRES_HOST', default='localhost'),
+        'PORT': int(os.getenv('POSTGRES_PORT', default='5432')),
+        'NAME': os.getenv('POSTGRES_DB', default='sportinj'),
+        'USER': os.getenv('POSTGRES_USER', default='sportinj'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='sportinj'),
     }
 }
 
@@ -164,22 +164,25 @@ AUTHENTICATION_BACKENDS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = os.getenv("SMTP_HOST", default="smtp.yandex.ru")
-EMAIL_USE_SSL = os.getenv("SMTP_SSL", default="True")
-EMAIL_PORT = int(os.getenv("SMTP_PORT", default=465))
-EMAIL_HOST_USER = os.getenv("SMTP_USER")
-EMAIL_HOST_PASSWORD = os.getenv("SMTP_PASSWORD")
+EMAIL_HOST = os.getenv('SMTP_HOST', default='smtp.yandex.ru')
+EMAIL_USE_SSL = os.getenv('SMTP_SSL', default='True')
+EMAIL_PORT = int(os.getenv('SMTP_PORT', default=465))
+EMAIL_HOST_USER = os.getenv('SMTP_USER')
+EMAIL_HOST_PASSWORD = os.getenv('SMTP_PASSWORD')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
+
 CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('LOCATION', default='redis://localhost:6379/1'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
 }
+
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', default='redis://localhost:6379/0')

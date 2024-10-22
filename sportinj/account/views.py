@@ -3,20 +3,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
+from django.core.cache import cache
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, TemplateView, UpdateView, View
 from resources.utils import ExtraContextMixin
 
 from account import forms
-from sportinj import settings
+from account.tasks import send_confirmation_by_email
 
 
 @method_decorator(cache_page(timeout=None), name='get')
@@ -38,35 +37,19 @@ class UserRegistrationView(CreateView):
         user.is_active = False
         user.save()
 
-        self.send_confirmation_by_email(user)
+        cache.set(
+            f'account_{user.pk}_verification_token',
+            default_token_generator.make_token(user),
+            timeout=3600 * 24,
+        )
+
+        send_confirmation_by_email.delay_on_commit(
+            self.request.scheme,
+            self.request.get_host(),
+            user.pk,
+        )
 
         return HttpResponseRedirect(self.success_url)
-
-    def send_confirmation_by_email(self, user):
-        token = default_token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        protocol = self.request.scheme
-        domain = self.request.get_host()
-
-        email_title = 'Confirm registration'
-        email_body = render_to_string(
-            'account/user_confirm_register_email.html',
-            {
-                'site_name': domain,
-                'protocol': protocol,
-                'domain': domain,
-                'uid': uid,
-                'token': token,
-            }
-        )
-
-        send_mail(
-            email_title,
-            email_body,
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-        )
 
 
 class UserProfileUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
@@ -114,7 +97,7 @@ class UserConfirmRegisterActivateView(View):
 
         if (
                 user is not None and
-                default_token_generator.check_token(user, token) and
+                cache.get(f'account_{user.pk}_verification_token') and
                 not user.is_active
             ):
             user.is_active = True

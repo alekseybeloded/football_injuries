@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row align-items-center mb-3 col-sm-12">
+  <h5>
+    Registration could not be confirmed. Link has expired.<br>
+    You need to register again and within 24 hours confirm your account by link,<br>
+    that will be sent to your email.
+  </h5>
+  <ul class="nav">
+    <li class="nav-item d-flex align-items-center">
+      <a href="{% url 'account:register' %}" class="nav-link me-2">Go to the registration page</a>
+    </li>
+  </ul>
+</div>
+
+{% endblock %}

@@ -12,23 +12,38 @@ User = get_user_model()
 
 
 @shared_task
-def send_confirmation_by_email(scheme, host, user_pk):
-    user = User.objects.get(pk=user_pk)
+def send_email(scheme, host, email, type):
+    user = User.objects.get(email=email)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     protocol = scheme
     domain = host
 
-    email_title = 'Confirm registration'
-    email_body = render_to_string(
-        'account/user_confirm_register_email.html',
-        {
-            'site_name': domain,
-            'protocol': protocol,
-            'domain': domain,
-            'uid': uid,
-            'token': cache.get(f'account_{user_pk}_verification_token')
-        }
-    )
+    if type == 'confirmation_account':
+        email_title = 'Confirm registration'
+        email_body = render_to_string(
+            'account/user_confirm_register_email.html',
+            {
+                'site_name': domain,
+                'protocol': protocol,
+                'domain': domain,
+                'uid': uid,
+                'token': cache.get(f'account_{user.pk}_verification_token')
+            }
+        )
+    elif type == 'reset_password':
+        email_title = 'Reset password'
+        email_body = render_to_string(
+            'account/password_reset_email.html',
+            {
+                'site_name': domain,
+                'protocol': protocol,
+                'domain': domain,
+                'uid': uid,
+                'token': cache.get(f'reset_password_token_for_{email}')
+            }
+        )
+    else:
+        raise ValueError('Incorrect type')
 
     send_mail(
         email_title,

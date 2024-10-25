@@ -1,5 +1,5 @@
 import pytest
-from account.forms import UserPasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 @pytest.mark.django_db
@@ -10,7 +10,7 @@ def test__user_password_change_form__valid(user):
         'new_password1': 'new_valid_password',
         'new_password2': 'new_valid_password'
     }
-    form = UserPasswordChangeForm(user=user, data=form_data)
+    form = PasswordChangeForm(user=user, data=form_data)
 
     assert form.is_valid()
 
@@ -63,7 +63,7 @@ def test__user_password_change_form__invalid(
         'new_password1': new_password1,
         'new_password2': new_password2,
     }
-    form = UserPasswordChangeForm(user=user, data=form_data)
+    form = PasswordChangeForm(user=user, data=form_data)
 
     assert form.is_valid() == form_is_valid
     assert expected_error in str(form.errors)

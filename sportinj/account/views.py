@@ -48,7 +48,7 @@ class UserRegistrationView(CreateView):
         cache.set(
             f'account_{user.pk}_verification_token',
             token,
-            timeout=3600 * 24,
+            3600 * 24,
         )
 
         send_email.delay_on_commit(
@@ -96,7 +96,7 @@ class UserPasswordResetView(PasswordResetView):
         cache.set(
             f'reset_password_token_for_{email}',
             token,
-            timeout=3600 * 24,
+            3600 * 24,
         )
 
         send_email.delay_on_commit(
@@ -157,7 +157,7 @@ class UserConfirmRegisterActivateView(View):
 
         if (
             user is not None and
-            cache.get(f'account_{user.pk}_verification_token') and
+            cache.get(f'account_{user.pk}_verification_token') == token and
             not user.is_active
         ):
             user.is_active = True
@@ -165,7 +165,7 @@ class UserConfirmRegisterActivateView(View):
             return redirect('account:user_confirm_register_success')
         elif user is not None and user.is_active:
             return redirect('account:user_already_confirm_register')
-        elif not cache.get(f'account_{user.pk}_verification_token'):
+        elif user is not None and not cache.get(f'account_{user.pk}_verification_token'):
             UserModel.objects.filter(pk=uid).delete()
             return redirect('account:user_confirm_register_link_expired')
         else:

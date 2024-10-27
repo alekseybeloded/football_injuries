@@ -10,7 +10,6 @@ services:
                 gunicorn sportinj.wsgi:application --bind 0.0.0.0:8000'
     volumes:
       - static_volume:/app/sportinj/staticfiles
-      - media_volume:/app/sportinj/media
     depends_on:
       db:
         condition: service_healthy
@@ -46,6 +45,22 @@ services:
     depends_on:
       - web
 
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_volume:/redis
+
+  celery:
+    env_file:
+      - .env
+    restart: unless-stopped
+    build: .
+    command: sh -c 'cd sportinj &&
+                celery -A sportinj worker --loglevel=info'
+
 volumes:
   static_volume:
-  media_volume:
+  redis_volume:

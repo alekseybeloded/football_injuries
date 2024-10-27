@@ -1,19 +1,23 @@
-from django.urls import reverse
+from unittest.mock import patch
+
 import pytest
+from django.urls import reverse
 
 
 @pytest.mark.django_db
 def test__user_registration_view__success_registration(client):
-    data = {
+    form_data = {
         'username': 'valid_username',
         'email': 'valid@mail.com',
         'password1': 'valid_password',
         'password2': 'valid_password',
     }
+    with patch('account.views.cache.set') as cache_set_mock:
 
-    response = client.post(reverse('account:register'), data)
+        response = client.post(reverse('account:register'), form_data)
 
-    response.status_code == 302
+        cache_set_mock.assert_called_once()
+    assert response.status_code == 302
 
 
 @pytest.mark.django_db
@@ -62,14 +66,14 @@ def test__user_registration_view__invalid_data(
     password2,
     expected_status_code
 ):
-    data = {
+    form_data = {
         'username': username,
         'email': email,
         'password1': password1,
         'password2': password2,
     }
 
-    response = client.post(reverse('account:register'), data)
+    response = client.post(reverse('account:register'), form_data)
 
     assert response.status_code == expected_status_code
 

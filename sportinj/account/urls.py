@@ -2,10 +2,9 @@ from django.contrib.auth.views import (
     LogoutView,
     PasswordChangeDoneView,
     PasswordResetCompleteView,
-    PasswordResetConfirmView,
     PasswordResetDoneView,
 )
-from django.urls import path, reverse_lazy
+from django.urls import path
 
 from account import views
 
@@ -32,17 +31,15 @@ urlpatterns = [
     path(
         'password-reset/done',
         PasswordResetDoneView.as_view(
-            template_name='account/password_reset_done.html'
+            template_name='account/password_reset_done.html',
+            title='Password reset',
         ),
         name='password_reset_done',
     ),
     path(
         'password-reset/<uidb64>/<token>/',
-        PasswordResetConfirmView.as_view(
-            template_name='account/password_reset_confirm.html',
-            success_url=reverse_lazy('account:password_reset_complete')
-        ),
-        name='password_reset_confirm',
+        views.UserPasswordResetConfirmView.as_view(),
+        name='password_reset_confirm'
     ),
     path(
         'password-reset/complete/',
@@ -50,6 +47,11 @@ urlpatterns = [
             template_name='account/password_reset_complete.html'
         ),
         name='password_reset_complete',
+    ),
+    path(
+        'password-reset/fail/',
+        views.UserPasswordResetFailView.as_view(),
+        name='password_reset_fail',
     ),
     path(
         'confirm-register/',
@@ -76,4 +78,9 @@ urlpatterns = [
         views.UserAlreadyConfirmRegisterView.as_view(),
         name='user_already_confirm_register',
     ),
+    path(
+        'confirm-register/link-expired/',
+        views.UserConfirmRegisterLinkExpiredView.as_view(),
+        name='user_confirm_register_link_expired',
+    )
 ]

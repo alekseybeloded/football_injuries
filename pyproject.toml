@@ -24,6 +24,7 @@ celery = {extras = ["redis"], version = "^5.4.0"}
 django-redis = "^5.4.0"
 curl-cffi = "^0.7.3"
 beautifulsoup4 = "^4.12.3"
+django-celery-beat = "^2.7.0"
 
 [tool.ruff]
 # Enable the pycodestyle (`E`) and Pyflakes (`F`) rules by default.

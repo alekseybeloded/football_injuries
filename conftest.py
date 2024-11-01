@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from account.authentication import EmailAuthBackend
 from resources.models import Team, Player, Injury
 from unittest.mock import Mock
+from bs4 import BeautifulSoup
 
 
 @pytest.fixture
@@ -68,3 +69,33 @@ def mock_response():
         </html>
     '''
     return mock_response
+
+
+@pytest.fixture
+def teams_data():
+    def create_team_table(
+        html='''
+            <table>
+                <tr><td>Header 1</td><td>Header 2</td></tr>
+                <tr><td>Player 1</td><td>Injury 1</td><td><a href="https://example.com/details1">Details</a></td></tr>
+                <tr><td>Player 2</td><td>Injury 2</td><td><a href="https://example.com/details2">Details</a></td></tr>
+            </table>
+        '''
+    ):
+        soup = BeautifulSoup(html, 'html.parser')
+        return soup.find('table')
+    return create_team_table
+
+
+@pytest.fixture
+def teams_names():
+    return ['Team 1', 'Team 2']
+
+
+@pytest.fixture
+def players_data():
+    return [
+        ['Player 1', 'Injury 1'],
+        ['Player 2', 'Injury 2'],
+    ]
+

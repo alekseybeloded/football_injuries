@@ -4,6 +4,7 @@ services:
       - .env
     restart: unless-stopped
     image: ghcr.io/alekseybeloded/football_injuries:${VERSION}
+    container_name: web
     command: sh -c 'python manage.py makemigrations &&
                 python manage.py migrate &&
                 python manage.py collectstatic --noinput &&
@@ -17,7 +18,7 @@ services:
   db:
     image: postgres:15-alpine
     restart: unless-stopped
-    container_name: sportinj-db
+    container_name: db
     ports:
       - "5432:5432"
     env_file:
@@ -33,6 +34,7 @@ services:
   nginx:
     image: nginx
     restart: unless-stopped
+    container_name: nginx
     volumes:
       - static_volume:/app/sportinj/staticfiles
       - media_volume:/app/sportinj/media
@@ -47,6 +49,7 @@ services:
 
   redis:
     image: redis
+    restart: unless-stopped
     container_name: redis
     ports:
       - 6379:6379
@@ -57,9 +60,10 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    build: .
+    container_name: celery
+    build: ghcr.io/alekseybeloded/football_injuries:${VERSION}
     command: sh -c 'cd sportinj &&
-                celery -A sportinj worker --loglevel=info'
+                celery -A sportinj worker --beat --scheduler django --loglevel=info'
 
 volumes:
   static_volume:

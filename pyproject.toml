@@ -31,7 +31,7 @@ django-celery-beat = "^2.7.0"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 lint.select = ["E", "E3", "F", "B", "I", "W", "UP", "T20"]
-lint.ignore = []
+lint.ignore = ["B905"]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 lint.fixable = ["ALL"]

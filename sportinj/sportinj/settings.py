@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'rest_api.apps.RestApiConfig',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 

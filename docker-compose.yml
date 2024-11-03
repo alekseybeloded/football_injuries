@@ -29,10 +29,19 @@ services:
   redis:
     image: redis
     container_name: redis
+    env_file:
+      - .env
     ports:
       - 6379:6379
     volumes:
       - redis_volume:/redis
+
+  celery:
+    env_file:
+      - .env
+    build: .
+    command: sh -c 'cd sportinj &&
+                celery -A sportinj worker --beat --scheduler django --loglevel=info'
 
 volumes:
   redis_volume:

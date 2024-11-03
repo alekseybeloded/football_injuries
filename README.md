@@ -2,14 +2,14 @@
 
 ## Introduction
 
-Welcome to the "Football Injuries Project"! This website is designed to provide users with access to information about injuries sustained by football players, as well as details about the teams and players associated with them.
+Welcome to the "Football Injury Project"! This website is designed to provide users with access to information about teams, players, and injuries sustained by players.
 
 In our project, you will be able to:
 
 * Learn about various types of injuries that football players encounter.
 * Access information about specific players and their teams.
 
-We aim to create a user-friendly and informative resource for football enthusiasts, coaches, medical professionals, and anyone interested in the health and well-being of athletes. Our goal in future is to raise awareness about injuries in football and their consequences, as well as to provide valuable data for analysis and research.
+We aim to create a resource for anyone interested in the health and well-being of football players.
 
 ### You can use Football injuries at the following link
 
@@ -26,18 +26,25 @@ We aim to create a user-friendly and informative resource for football enthusias
 SECRET_KEY=<django_secret_key>
 ALLOWED_HOSTS=<127.0.0.1>
 INTERNAL_IPS=<127.0.0.1>
+DEBUG=<True>
+
 POSTGRES_DB=<postgres_db>
 POSTGRES_USER=<postgres_user>
 POSTGRES_PASSWORD=<postgres_password>
 POSTGRES_HOST=<postgres_host>
 POSTGRES_PORT=<postgres_port>
-DEBUG=<True>
 
 SMTP_USER=<smtp_user>
 SMTP_PASSWORD=<smtp_password>
 SMTP_HOST=<smtp_host>
 SMTP_PORT=<smtp_port>
 SMTP_SSL=<True>
+
+LOCATION=<cache_location>
+
+CELERY_BROKER_URL=<celery_broker_url>
+
+PROXY=<proxy_server>
 ```
 
 * Install <a href="https://docs.docker.com/engine/install/" class="external-link" style="text-decoration: none" target="_blank"><strong>Docker</strong></a>
@@ -45,9 +52,7 @@ SMTP_SSL=<True>
 * Pull, build and run docker containers:
 
 ``` run commands
-docker compose pull
-docker compose build
-docker compose up -d
+docker compose up -d --build
 ```
 
 * Follow link <a href="http://127.0.0.1" class="external-link" style="text-decoration: none" target="_blank"><strong>http://127.0.0.1:8000</strong></a>
@@ -61,13 +66,13 @@ docker compose up -d
 
 ## Deploy
 
-* Rent virtual maschine with static IP / rent domain
+* Rent virtual machine with static IP / rent domain
 
-* Create ssh
+* Create SSH
 
-* Connect to server via ssh
+* Connect to server via SSH
 
-* _Optionally (for rented domain) - add public ip to rented domain in domain settings_
+* _Optionally (for rented domain) - add public IP to rented domain in domain settings_
 
 * Install docker (follow <a href="https://docs.docker.com/engine/install/" class="external-link" style="text-decoration: none" target="_blank"><strong>instructions</strong></a> _include_ **_postinstall steps_**)
 
@@ -99,16 +104,15 @@ mkdir nginx/conf.d
         **domain.key** private key
 
 * Copy **docker-compose.yml** from **football_injuries/deploy/**:
-* Pull and run docker containers:
+* Pull, build and run docker containers:
 
 ```run
-docker compose pull
-docker compose up-d
+docker compose up -d --build
 ```
 
 * Check link <a href="#" class="external-link" style="text-decoration: none" target="_blank"><strong>https://your_domain</strong></a>
 
-## Football Injuries Project - REST API Documentation
+## Football Injuries Project - REST API documentation
 
 ### Overview
 
@@ -186,6 +190,6 @@ Get all injuries
 curl -X GET https://sportinj.ru/api/v1/injuries/
 ```
 
-### Conclusion
+## Conlusion
 
-This documentation provides a comprehensive overview of the REST API for the Football Injuries Project. You can use the provided endpoints to access data about teams, players, and injuries in a structured format.
+This documentation provides a comprehensive overview of the Football Injuries Project. You can use the website or the provided endpoints to access data about teams, players, and injuries. You can also install this project on your local machine or deploy it to a virtual machine with a static IP.

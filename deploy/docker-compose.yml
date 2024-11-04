@@ -5,7 +5,8 @@ services:
     restart: unless-stopped
     image: ghcr.io/alekseybeloded/football_injuries:${VERSION}
     container_name: web
-    command: sh -c 'python manage.py makemigrations &&
+    command: sh -c 'cd sportinj &&
+                python manage.py makemigrations &&
                 python manage.py migrate &&
                 python manage.py collectstatic --noinput &&
                 gunicorn sportinj.wsgi:application --bind 0.0.0.0:8000'
@@ -37,7 +38,6 @@ services:
     container_name: nginx
     volumes:
       - static_volume:/app/sportinj/staticfiles
-      - media_volume:/app/sportinj/media
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
 
@@ -63,6 +63,8 @@ services:
     container_name: celery
     build: ghcr.io/alekseybeloded/football_injuries:${VERSION}
     command: sh -c 'cd sportinj &&
+                python manage.py makemigrations &&
+                python manage.py migrate &&
                 celery -A sportinj worker --beat --scheduler django --loglevel=info'
 
 volumes:

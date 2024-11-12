@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, TemplateView
 
-from resources.models import Player, Team
+from resources.models import Injury, Player, Team
 from resources.utils import ExtraContextMixin
 
 
@@ -15,6 +15,9 @@ class TeamListView(ExtraContextMixin, ListView):
     context_object_name = 'teams'
     title_page = 'Homepage - Football injuries'
     paginate_by = 10
+
+    def get_queryset(self):
+        return Team.objects.all().values('slug', 'name')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,12 +30,14 @@ class TeamPlayerListView(LoginRequiredMixin, ExtraContextMixin, ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        self.team = get_object_or_404(Team, slug=self.kwargs['team_slug'])
-        return Player.objects.filter(team__slug=self.kwargs['team_slug'])
+        return Player.objects.filter(team__slug=self.kwargs['team_slug']).values('name', 'slug')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        return self.get_mixin_context(context, team=self.team, title=f'{self.team} players')
+        return self.get_mixin_context(
+            context,
+            title=f'{self.kwargs["team_slug"].replace("-", " ").title()} players',
+        )
 
 
 class PlayerInjuryListView(ExtraContextMixin, ListView):
@@ -41,12 +46,14 @@ class PlayerInjuryListView(ExtraContextMixin, ListView):
     title_page = 'Injuries'
 
     def get_queryset(self):
-        self.player = get_object_or_404(Player, slug=self.kwargs['player_slug'])
-        return self.player.injuries.all()
+        return Injury.objects.filter(player__slug=self.kwargs['player_slug']).values('name')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        return self.get_mixin_context(context, title=f"{self.player}'s injuries")
+        return self.get_mixin_context(
+            context,
+            title=f'{self.kwargs["player_slug"].replace("-", " ").title()}"s injuries',
+        )
 
 
 @method_decorator(cache_page(timeout=None), name='get')

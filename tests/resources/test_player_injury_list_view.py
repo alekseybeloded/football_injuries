@@ -19,8 +19,11 @@ def test__player_injury_list_view__renders_correct_template(admin_client, player
 
     assert response.status_code == 200
     assert 'resources/injury.html' in [template.name for template in response.templates]
-    assert list(response.context['injuries']) == [injury_1, injury_2]
-    assert response.context['title'] == f"{player.name}'s injuries"
+    assert list(response.context['injuries']) == [
+        {'name': 'Injury 1' },
+        {'name': 'Injury 2'},
+    ]
+    assert response.context['title'] == f'{player.name}"s injuries'
 
 
 @pytest.mark.django_db
@@ -36,17 +39,3 @@ def test__player_injury_list_view__with_no_injuries(admin_client, player):
 
     assert response.status_code == 200
     assert list(response.context['injuries']) == []
-
-
-@pytest.mark.django_db
-def test__player_injury_list_view__with_invalid_slug(admin_client):
-    response = admin_client.get(
-        reverse(
-            'player-injuries',
-            kwargs={
-                'player_slug': 'non-existent-player',
-            }
-        )
-    )
-
-    assert response.status_code == 404

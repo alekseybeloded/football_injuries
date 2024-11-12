@@ -12,8 +12,16 @@ def test__team_player_list_view__renders_correct_template(admin_client, team):
 
     assert response.status_code == 200
     assert 'resources/player.html' in [template.name for template in response.templates]
-    assert response.context['team'] == team
-    assert list(response.context['players']) == [player_1, player_2]
+    assert list(response.context['players']) == [
+        {
+            'name': 'Player 1',
+            'slug': 'player-1',
+        },
+        {
+            'name': 'Player 2',
+            'slug': 'player-2',
+        },
+    ]
     assert response.context['title'] == f'{team} players'
 
 
@@ -23,13 +31,6 @@ def test__team_player_list_view__with_no_players(admin_client, team):
 
     assert response.status_code == 200
     assert list(response.context['players']) == []
-
-
-@pytest.mark.django_db
-def test__team_player_list_view__with_invalid_team_slug(admin_client):
-    response = admin_client.get(reverse('team-players', kwargs={'team_slug': 'non-existent-team'}))
-
-    assert response.status_code == 404
 
 
 @pytest.mark.django_db

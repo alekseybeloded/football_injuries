@@ -14,7 +14,17 @@ def test__team_list_view__renders_correct_template(client):
     assert response.status_code == 200
     assert 'resources/index.html' in [template.name for template in response.templates]
     assert len(teams) == 2
-    assert list(response.context['teams']) == [team_1, team_2]
+    assert list(response.context['teams']) == [
+        {
+            'name': 'Team 1',
+            'slug': 'team-1',
+        },
+        {
+            'name': 'Team 2',
+            'slug': 'team-2',
+        },
+
+    ]
     assert response.context['title'] == 'Homepage - Football injuries'
 
 
